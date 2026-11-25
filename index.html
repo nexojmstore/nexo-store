@@ -43,7 +43,7 @@
   </div>
 
   <!-- =========================================================
-       VISTA 0: VERIFICANDO SESIÓN ADMIN (EVITA FILTRAR EL PANEL)
+       VISTA 0: VERIFICANDO SESIÓN ADMIN
   ========================================================== -->
   <div id="admin-loading-view" class="hidden min-h-screen items-center justify-center bg-bgdark p-4">
     <div class="text-center">
@@ -285,7 +285,7 @@
       <div id="reviews-grid" class="grid grid-cols-1 gap-5 md:grid-cols-3"></div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer (SIN botón de Panel Admin) -->
     <footer class="border-t border-zinc-900 bg-bgdark">
       <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-10 text-xs text-zinc-500 sm:flex-row sm:px-6">
         <div class="flex items-center gap-2.5">
@@ -296,9 +296,6 @@
           <a href="#resenas" class="transition hover:text-neon">Reseñas</a>
           <button onclick="openClubModal()" class="transition hover:text-neon">Únete al Club</button>
           <button onclick="openWhatsAppGeneral()" class="transition hover:text-neon">WhatsApp</button>
-          <button onclick="openAdminRoute()" class="rounded-lg border border-zinc-800 px-3 py-1.5 font-semibold text-zinc-400 transition hover:border-neon hover:text-neon">
-            🔒 Panel Admin
-          </button>
         </div>
       </div>
     </footer>
@@ -810,7 +807,7 @@
           <div class="rounded-2xl border border-zinc-800 bg-surface p-6 space-y-4">
             <div>
               <h2 class="text-sm font-black uppercase tracking-wider text-neon">5. Administradores autorizados (Bloqueo Google)</h2>
-              <p class="mt-1 text-xs text-zinc-400">Solo los correos Gmail de esta lista pueden entrar al Panel Admin. Cualquier otra cuenta será bloqueada.</p>
+              <p class="mt-1 text-xs text-zinc-400">Solo los correos Gmail de esta lista pueden entrar usando <code class="text-neon">#admin1</code>. Cualquier otra cuenta será bloqueada.</p>
             </div>
             <div class="flex flex-wrap gap-2">
               <input id="new-admin-email" type="email" placeholder="nuevo.admin@gmail.com" class="flex-1 min-w-[220px] rounded-xl border border-zinc-800 bg-surface-2 px-3.5 py-2.5 text-sm text-white focus:border-neon focus:outline-none" />
@@ -826,7 +823,7 @@
   </div>
 
   <!-- =========================================================
-       MODAL CREAR / EDITAR PRODUCTO (PC Upload + Ocultar + Colores)
+       MODAL CREAR / EDITAR PRODUCTO
   ========================================================== -->
   <div id="product-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
     <div class="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-zinc-800 bg-surface p-6 shadow-2xl">
@@ -944,7 +941,6 @@
       appId: "1:660789791569:web:0b1df6628df36032ee6170"
     };
 
-    // Correo propietario principal (siempre protegido)
     const PRIMARY_OWNER_EMAIL = "jimmyoblitas19@gmail.com";
     const BASE_PATH = ["artifacts", "jm-nexo-store", "public", "data"];
 
@@ -1034,6 +1030,15 @@
       }
     ];
 
+    function loadSavedCart() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem("jm_nexo_cart") || "[]");
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
     const state = {
       products: [...DEFAULT_PRODUCTS],
       categories: [...DEFAULT_CATEGORIES],
@@ -1043,7 +1048,7 @@
       selectedCategory: "ALL",
       searchQuery: "",
       selectedColors: {},
-      cart: JSON.parse(localStorage.getItem("jm_nexo_cart") || "[]"),
+      cart: loadSavedCart(),
       user: null,
       isAdmin: false,
       authChecked: false,
@@ -1080,7 +1085,7 @@
     }
 
     // =========================================================
-    // SUBIDA DE IMÁGENES DESDE PC (COMPRESIÓN AUTOMÁTICA)
+    // SUBIDA DE IMÁGENES DESDE PC
     // =========================================================
     window.handleLocalUpload = (fileInput, targetInputId, previewImgId, maxWidth = 720, quality = 0.74) => {
       const file = fileInput.files && fileInput.files[0];
@@ -1223,7 +1228,6 @@
       const s = state.settings;
       document.title = `${s.storeName} | ${s.storeTagline}`;
 
-      // Nombre y logo en navbar, footer y admin sidebar
       document.getElementById("nav-store-name").textContent = s.storeName;
       document.getElementById("nav-store-tagline").textContent = s.storeTagline;
       document.getElementById("footer-store-name").textContent = s.storeName;
@@ -1242,7 +1246,6 @@
         admLogo.classList.add("hidden"); admFallback.classList.remove("hidden");
       }
 
-      // Hero y textos
       document.getElementById("hero-badge").textContent = s.heroBadge;
       document.getElementById("hero-title").textContent = s.heroTitle;
       document.getElementById("hero-highlight").textContent = " " + s.heroHighlight;
@@ -1255,20 +1258,17 @@
       document.getElementById("stat-3-val").textContent = s.stat3Val;
       document.getElementById("stat-3-lbl").textContent = s.stat3Lbl;
 
-      // Cómo trabajamos
       document.getElementById("about-title").textContent = s.aboutTitle;
       document.getElementById("about-desc").textContent = s.aboutDesc;
       document.getElementById("about-location").textContent = s.aboutLocation;
       document.getElementById("about-image").src = s.aboutImage || DEFAULT_SETTINGS.aboutImage;
 
-      // Marquee y envío gratis
       const items = (s.marquee || "").split("|").map(x => x.trim()).filter(Boolean);
       document.getElementById("marquee-content").innerHTML = [...items, ...items, ...items].map(t => `<span class="inline-flex items-center gap-2">⚡ ${esc(t)}</span>`).join("");
       const minTxt = `S/ ${s.freeShippingMin || 299}`;
       document.getElementById("hero-free-shipping").textContent = minTxt;
       document.querySelectorAll(".benefit-free-shipping").forEach(el => el.textContent = minTxt);
 
-      // Rellenar formulario de ajustes si el usuario no está escribiendo en ese campo
       const fieldMap = {
         "set-store-name": s.storeName,
         "set-store-tagline": s.storeTagline,
@@ -1600,8 +1600,15 @@
     });
 
     // =========================================================
-    // BLOQUEO ESTRICTO DE ADMIN + GOOGLE AUTH
+    // RUTA OCULTA (#admin1 / ?admin1) + BLOQUEO GOOGLE AUTH
     // =========================================================
+    function isAdminRoute() {
+      const hash = window.location.hash.toLowerCase();
+      const search = window.location.search.toLowerCase();
+      const path = window.location.pathname.toLowerCase();
+      return hash === "#admin1" || search === "?admin1" || path.endsWith("/admin1") || path.endsWith("/admin1/");
+    }
+
     function showView(viewId) {
       ["storefront-view", "admin-loading-view", "admin-login-view", "admin-view"].forEach(id => {
         const el = document.getElementById(id);
@@ -1614,17 +1621,13 @@
     }
 
     window.showStorefront = () => {
-      history.replaceState(null, "", window.location.pathname);
+      const cleanPath = window.location.pathname.replace(/\/admin1\/?$/i, "/");
+      history.replaceState(null, "", cleanPath);
       showView("storefront-view");
     };
 
-    window.openAdminRoute = () => {
-      window.location.hash = "admin";
-      handleRoute();
-    };
-
     function handleRoute() {
-      if (window.location.hash === "#admin") {
+      if (isAdminRoute()) {
         if (!state.authChecked) {
           showView("admin-loading-view");
           return;
@@ -1646,7 +1649,6 @@
       const errBox = document.getElementById("admin-auth-error");
       errBox.classList.add("hidden");
       try {
-        // Cargar lista actualizada de administradores antes de validar
         try {
           const snap = await getDoc(settingsDoc);
           if (snap.exists()) state.settings = { ...DEFAULT_SETTINGS, ...snap.data() };
@@ -1679,13 +1681,20 @@
     };
 
     onAuthStateChanged(auth, async (user) => {
-      // Aseguramos leer los admins autorizados desde Firestore antes de otorgar acceso
+      if (!user) {
+        state.user = null;
+        state.isAdmin = false;
+        state.authChecked = true;
+        handleRoute();
+        return;
+      }
+
       try {
         const snap = await getDoc(settingsDoc);
         if (snap.exists()) state.settings = { ...DEFAULT_SETTINGS, ...snap.data() };
       } catch {}
 
-      if (user && isEmailAuthorized(user.email)) {
+      if (isEmailAuthorized(user.email)) {
         state.user = user;
         state.isAdmin = true;
         document.getElementById("admin-user-email").textContent = user.email;
@@ -1697,9 +1706,7 @@
         listenOrdersForAdmin();
         renderAll();
       } else {
-        if (user) {
-          await signOut(auth);
-        }
+        await signOut(auth);
         state.user = null;
         state.isAdmin = false;
       }
