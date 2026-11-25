@@ -1,0 +1,2698 @@
+<!DOCTYPE html>
+<html lang="es" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JM NEXO STORE — Tech · Figures · Gaming</title>
+
+  <!-- Fuente Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Iconos Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            nexo: {
+              400: '#c7f75b',
+              500: '#b4f035',
+              600: '#9ad622',
+            },
+            obsidian: {
+              950: '#07080a',
+              900: '#0c0e12',
+              850: '#12151b',
+              800: '#181c24',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: #07080a;
+      color: #f3f4f6;
+      overflow-x: hidden;
+    }
+
+    /* Cuadrícula sutil en el Hero */
+    .hero-grid-bg {
+      background-image:
+        linear-gradient(to right, rgba(180, 240, 53, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(180, 240, 53, 0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* Animación de la barra superior */
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+
+    /* Scrollbar oscuro elegante */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #07080a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #232833;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #b4f035;
+    }
+  </style>
+</head>
+<body class="bg-obsidian-950 text-gray-100 antialiased selection:bg-nexo-500 selection:text-black">
+
+  <!-- ========================================================= -->
+  <!-- VISTA 1: TIENDA PÚBLICA PARA CLIENTES                     -->
+  <!-- ========================================================= -->
+  <div id="storefront-view" class="min-h-screen flex flex-col">
+
+    <!-- Barra superior animada -->
+    <div class="bg-nexo-500 text-black text-[11px] font-extrabold tracking-wider uppercase py-2 overflow-hidden border-b border-black/10">
+      <div class="animate-marquee whitespace-nowrap">
+        <div class="flex items-center gap-10 px-5">
+          <span>⚡ ENVÍO GRATIS DESDE S/ <span class="js-free-shipping">299</span></span>
+          <span>⚡ NUEVAS FIGURAS CADA SEMANA</span>
+          <span>⚡ 3 MESES DE GARANTÍA</span>
+          <span>⚡ DEVOLUCIONES EN 30 DÍAS</span>
+          <span>⚡ ENVÍO GRATIS DESDE S/ <span class="js-free-shipping">299</span></span>
+          <span>⚡ NUEVAS FIGURAS CADA SEMANA</span>
+          <span>⚡ 3 MESES DE GARANTÍA</span>
+          <span>⚡ DEVOLUCIONES EN 30 DÍAS</span>
+        </div>
+        <div class="flex items-center gap-10 px-5" aria-hidden="true">
+          <span>⚡ ENVÍO GRATIS DESDE S/ <span class="js-free-shipping">299</span></span>
+          <span>⚡ NUEVAS FIGURAS CADA SEMANA</span>
+          <span>⚡ 3 MESES DE GARANTÍA</span>
+          <span>⚡ DEVOLUCIONES EN 30 DÍAS</span>
+          <span>⚡ ENVÍO GRATIS DESDE S/ <span class="js-free-shipping">299</span></span>
+          <span>⚡ NUEVAS FIGURAS CADA SEMANA</span>
+          <span>⚡ 3 MESES DE GARANTÍA</span>
+          <span>⚡ DEVOLUCIONES EN 30 DÍAS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header / Navegación principal -->
+    <header class="sticky top-0 z-40 bg-obsidian-950/90 backdrop-blur-xl border-b border-white/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between gap-4">
+
+        <!-- Logo -->
+        <a href="#" onclick="resetFilters(); return false;" class="flex items-center gap-3 shrink-0 group">
+          <div class="w-10 h-10 rounded-xl bg-nexo-500 flex items-center justify-center text-black shadow-lg shadow-nexo-500/20 group-hover:scale-105 transition-transform">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.3L18.5 8 12 11.7 5.5 8 12 4.3zM5 9.9l6 3.4v6.3l-6-3.3V9.9zm8 9.7v-6.3l6-3.4v6.4l-6 3.3z"/>
+            </svg>
+          </div>
+          <div class="leading-tight">
+            <div class="font-extrabold text-base tracking-tight text-white">
+              <span class="js-store-name-prefix">JM NEXO</span> <span class="text-nexo-500 js-store-name-suffix">STORE</span>
+            </div>
+            <div class="text-[9px] tracking-[0.22em] text-gray-400 uppercase font-semibold">TECH · FIGURES · GAMING</div>
+          </div>
+        </a>
+
+        <!-- Enlaces Desktop -->
+        <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-gray-300">
+          <button onclick="filterAndScroll('Tecnología')" class="hover:text-nexo-500 transition-colors">Tecnología</button>
+          <button onclick="filterAndScroll('Figuras')" class="hover:text-nexo-500 transition-colors">Figuras</button>
+          <button onclick="filterAndScroll('Gaming')" class="hover:text-nexo-500 transition-colors">Gaming</button>
+          <button onclick="filterAndScroll('Ofertas')" class="text-nexo-500 hover:text-nexo-400 font-semibold transition-colors">Ofertas</button>
+        </nav>
+
+        <!-- Buscador + Acciones -->
+        <div class="flex items-center gap-2.5 sm:gap-3 flex-1 lg:flex-initial justify-end">
+          <div class="relative hidden md:block w-56 xl:w-64">
+            <i data-lucide="search" class="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+            <input
+              id="search-input"
+              type="text"
+              oninput="handleSearch(this.value)"
+              placeholder="Buscar productos..."
+              class="w-full bg-obsidian-900 border border-white/10 focus:border-nexo-500 rounded-full pl-10 pr-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none transition-colors"
+            />
+          </div>
+
+          <!-- Botón Carrito -->
+          <button
+            onclick="toggleCart()"
+            aria-label="Abrir carrito"
+            class="relative w-10 h-10 rounded-full bg-obsidian-900 border border-white/10 hover:border-nexo-500 text-gray-200 flex items-center justify-center transition-colors shrink-0"
+          >
+            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+            <span id="cart-badge" class="hidden absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-nexo-500 text-black text-[10px] font-extrabold flex items-center justify-center">0</span>
+          </button>
+
+          <!-- Botón Únete al Club -->
+          <button
+            onclick="openClubModal()"
+            class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-nexo-500 hover:bg-nexo-400 text-black text-xs font-extrabold uppercase tracking-wider transition-all shadow-lg shadow-nexo-500/15 shrink-0"
+          >
+            <span>ÚNETE AL CLUB</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+
+          <!-- Menú Móvil -->
+          <button
+            onclick="toggleMobileMenu()"
+            aria-label="Menú"
+            class="lg:hidden w-10 h-10 rounded-full bg-obsidian-900 border border-white/10 flex items-center justify-center text-gray-300"
+          >
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Menú Desplegable Móvil -->
+      <div id="mobile-menu" class="hidden lg:hidden border-t border-white/10 bg-obsidian-900 px-4 py-4 space-y-3">
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          <input
+            id="mobile-search-input"
+            type="text"
+            oninput="handleSearch(this.value)"
+            placeholder="Buscar productos..."
+            class="w-full bg-obsidian-950 border border-white/10 focus:border-nexo-500 rounded-full pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none"
+          />
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-sm font-semibold">
+          <button onclick="filterAndScroll('Tecnología'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/5 hover:border-nexo-500">Tecnología</button>
+          <button onclick="filterAndScroll('Figuras'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/5 hover:border-nexo-500">Figuras</button>
+          <button onclick="filterAndScroll('Gaming'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/5 hover:border-nexo-500">Gaming</button>
+          <button onclick="filterAndScroll('Ofertas'); toggleMobileMenu();" class="text-left px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/5 text-nexo-500">Ofertas</button>
+        </div>
+        <button onclick="openClubModal(); toggleMobileMenu();" class="w-full py-3 rounded-full bg-nexo-500 text-black text-xs font-extrabold uppercase tracking-wider">
+          ÚNETE AL CLUB →
+        </button>
+      </div>
+    </header>
+
+    <!-- Sección Hero -->
+    <section class="relative hero-grid-bg overflow-hidden border-b border-white/5">
+      <div class="absolute -top-32 -left-32 w-96 h-96 bg-nexo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
+        <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+
+          <!-- Columna Izquierda -->
+          <div class="lg:col-span-6 space-y-6">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-obsidian-900 border border-white/10 text-[11px] font-bold tracking-widest uppercase text-gray-300">
+              <span class="w-2 h-2 rounded-full bg-nexo-500 animate-pulse"></span>
+              <span>DROP 04 · TEMPORADA 2026</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl lg:text-[56px] font-black tracking-tight leading-[1.05] text-white">
+              Tu próximo setup empieza en
+              <span class="text-nexo-500 block mt-1">
+                <span class="js-store-name-prefix">JM NEXO</span> <span class="js-store-name-suffix">STORE</span>
+              </span>
+            </h1>
+
+            <p class="text-gray-400 text-base sm:text-lg max-w-lg leading-relaxed">
+              Tecnología de alto rendimiento, figuras de colección numeradas y periféricos gaming seleccionados uno a uno para elevar tu escritorio.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-3.5 pt-2">
+              <a
+                href="#catalogo"
+                class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-nexo-500 hover:bg-nexo-400 text-black font-extrabold text-xs uppercase tracking-wider transition-all shadow-lg shadow-nexo-500/20"
+              >
+                <span>VER CATÁLOGO</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </a>
+              <a
+                href="#categorias"
+                class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-obsidian-900 hover:bg-obsidian-800 border border-white/15 text-white font-bold text-xs uppercase tracking-wider transition-colors"
+              >
+                <i data-lucide="layout-grid" class="w-4 h-4 text-nexo-500"></i>
+                <span>EXPLORAR COLECCIONES</span>
+              </a>
+            </div>
+
+            <!-- Métricas -->
+            <div class="grid grid-cols-3 gap-6 pt-6 border-t border-white/10 max-w-md">
+              <div>
+                <div class="text-2xl sm:text-3xl font-black text-white">12K+</div>
+                <div class="text-[10px] font-semibold uppercase tracking-wider text-gray-500 mt-1">PEDIDOS ENVIADOS</div>
+              </div>
+              <div>
+                <div class="text-2xl sm:text-3xl font-black text-white">4,9/5</div>
+                <div class="text-[10px] font-semibold uppercase tracking-wider text-gray-500 mt-1">VALORACIÓN MEDIA</div>
+              </div>
+              <div>
+                <div class="text-2xl sm:text-3xl font-black text-white">24 h</div>
+                <div class="text-[10px] font-semibold uppercase tracking-wider text-gray-500 mt-1">ENVÍO EXPRESS</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Showcase Visual -->
+          <div class="lg:col-span-6">
+            <div class="relative rounded-3xl overflow-hidden border border-white/10 bg-obsidian-900 shadow-2xl">
+              <img
+                src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=1100&q=85"
+                onerror="this.src='https://placehold.co/900x700/0c0e12/b4f035?text=JM+NEXO+SETUP'"
+                alt="Setup Gaming JM NEXO STORE"
+                class="w-full h-[360px] sm:h-[460px] object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/20 to-transparent"></div>
+
+              <!-- Badge superior -->
+              <div class="absolute top-4 left-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-obsidian-950/85 backdrop-blur-md border border-white/10 text-[11px] font-bold text-white">
+                <i data-lucide="truck" class="w-3.5 h-3.5 text-nexo-500"></i>
+                <span>ENVÍO GRATIS +S/ <span class="js-free-shipping">299</span></span>
+              </div>
+
+              <!-- Mini tarjeta inferior -->
+              <div class="absolute bottom-4 left-4 right-4 bg-obsidian-950/90 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <div class="w-11 h-11 rounded-xl bg-nexo-500/15 border border-nexo-500/30 flex items-center justify-center text-nexo-500 shrink-0">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <div class="text-xs font-extrabold text-white truncate">Drop limitado · Reposición cada viernes</div>
+                    <div class="text-[11px] text-gray-400 truncate">Figuras escala 1/7 y periféricos 8K con stock real</div>
+                  </div>
+                </div>
+                <a href="#catalogo" class="w-10 h-10 rounded-full bg-nexo-500 hover:bg-nexo-400 text-black flex items-center justify-center shrink-0 transition-transform hover:scale-105">
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Barra de Beneficios / Garantías -->
+    <section class="bg-obsidian-900 border-b border-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="flex items-start gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-obsidian-950 border border-white/10 flex items-center justify-center text-nexo-500 shrink-0">
+              <i data-lucide="truck" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white">Envío en 24-48 h</h3>
+              <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Gratis a partir de S/ <span class="js-free-shipping">299</span> en todo el Perú.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-obsidian-950 border border-white/10 flex items-center justify-center text-nexo-500 shrink-0">
+              <i data-lucide="shield-check" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white">3 meses de garantía</h3>
+              <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Cobertura directa durante 3 meses en todos los productos.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-obsidian-950 border border-white/10 flex items-center justify-center text-nexo-500 shrink-0">
+              <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white">30 días de devolución</h3>
+              <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Sin preguntas y con gestión rápida y transparente.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3.5">
+            <div class="w-10 h-10 rounded-xl bg-obsidian-950 border border-white/10 flex items-center justify-center text-nexo-500 shrink-0">
+              <i data-lucide="headphones" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white">Soporte especializado</h3>
+              <p class="text-xs text-gray-400 mt-0.5 leading-relaxed">Te asesoramos antes y después de tu compra por WhatsApp.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Categorías -->
+    <section id="categorias" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 w-full">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+        <div>
+          <span class="text-[11px] font-extrabold tracking-[0.2em] uppercase text-nexo-500">TRES MUNDOS, UNA MISMA OBSESIÓN</span>
+          <h2 class="text-3xl sm:text-4xl font-black text-white mt-2">Explora por categoría</h2>
+        </div>
+        <button onclick="filterAndScroll('Todo')" class="inline-flex items-center gap-1.5 text-xs font-bold text-gray-300 hover:text-nexo-500 transition-colors self-start sm:self-auto">
+          <span>Ver todo el catálogo</span>
+          <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div id="categories-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Renderizado dinámicamente -->
+      </div>
+    </section>
+
+    <!-- Sección Catálogo / Productos Destacados -->
+    <section id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 w-full">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+        <div>
+          <span class="text-[11px] font-extrabold tracking-[0.2em] uppercase text-nexo-500">SELECCIÓN DE LA CASA</span>
+          <h2 class="text-3xl sm:text-4xl font-black text-white mt-2">Productos destacados</h2>
+          <p class="text-sm text-gray-400 mt-2 max-w-md">Lo que más se está llevando esta semana. Stock limitado y reposiciones cada viernes.</p>
+        </div>
+
+        <!-- Filtros de categoría -->
+        <div id="filter-pills" class="flex flex-wrap items-center gap-1.5 p-1.5 rounded-full bg-obsidian-900 border border-white/10 self-start">
+          <button onclick="setCategoryFilter('Todo')" data-filter="Todo" class="filter-pill px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all bg-nexo-500 text-black">Todo</button>
+          <button onclick="setCategoryFilter('Tecnología')" data-filter="Tecnología" class="filter-pill px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all text-gray-400 hover:text-white">Tecnología</button>
+          <button onclick="setCategoryFilter('Figuras')" data-filter="Figuras" class="filter-pill px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all text-gray-400 hover:text-white">Figuras</button>
+          <button onclick="setCategoryFilter('Gaming')" data-filter="Gaming" class="filter-pill px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all text-gray-400 hover:text-white">Gaming</button>
+          <button onclick="setCategoryFilter('Ofertas')" data-filter="Ofertas" class="filter-pill px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all text-gray-400 hover:text-white">Ofertas</button>
+        </div>
+      </div>
+
+      <!-- Grid de Productos -->
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Renderizado dinámicamente -->
+      </div>
+
+      <!-- Estado vacío -->
+      <div id="products-empty" class="hidden text-center py-16 bg-obsidian-900 border border-white/10 rounded-3xl">
+        <div class="w-12 h-12 rounded-2xl bg-obsidian-850 border border-white/10 flex items-center justify-center text-gray-500 mx-auto mb-3">
+          <i data-lucide="package-search" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-base font-bold text-white">No encontramos productos con ese filtro</h3>
+        <p class="text-xs text-gray-400 mt-1">Prueba limpiando la búsqueda o cambiando de categoría.</p>
+        <button onclick="resetFilters()" class="mt-4 px-5 py-2.5 rounded-full bg-nexo-500 text-black text-xs font-extrabold uppercase tracking-wider">
+          Ver todos los productos
+        </button>
+      </div>
+    </section>
+
+    <!-- Sección Editorial: Cómo Trabajamos -->
+    <section class="bg-obsidian-900/70 border-y border-white/5 mt-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+          <div class="lg:col-span-6">
+            <div class="relative rounded-3xl overflow-hidden border border-white/10">
+              <img
+                src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=1000&q=85"
+                onerror="this.src='https://placehold.co/800x600/0c0e12/b4f035?text=CURADURIA+JM+NEXO'"
+                alt="Curaduría de productos JM NEXO STORE"
+                class="w-full h-[360px] sm:h-[440px] object-cover"
+              />
+              <div class="absolute bottom-4 left-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-obsidian-950/90 border border-white/10 text-[11px] font-bold tracking-wider uppercase text-gray-200">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-nexo-500"></i>
+                <span>ENVÍOS A TODO EL PERÚ</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 space-y-6">
+            <div>
+              <span class="text-[11px] font-extrabold tracking-[0.2em] uppercase text-nexo-500">CÓMO TRABAJAMOS</span>
+              <h2 class="text-3xl sm:text-4xl font-black text-white mt-2 leading-tight">Pocas piezas, elegidas con criterio</h2>
+              <p class="text-sm sm:text-base text-gray-400 mt-4 leading-relaxed">
+                Abrimos <span class="text-white font-semibold"><span class="js-store-name-prefix">JM NEXO</span> <span class="js-store-name-suffix">STORE</span></span> porque comprar tecnología y figuras se había vuelto un catálogo infinito sin alma. Aquí cada referencia pasa por nuestras manos antes de llegar a tu estantería.
+              </p>
+            </div>
+
+            <div class="space-y-4 pt-2">
+              <div class="flex items-start gap-4 pb-4 border-b border-white/5">
+                <div class="w-10 h-10 rounded-xl bg-obsidian-950 border border-white/10 flex items-center justify-center text-nexo-500 shrink-0">
+                  <i data-lucide="fingerprint" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm font-bold text-white">Curado, no acumulado</h3>
+                  <p class="text-xs text-gray-400 mt-1">Probamos cada producto antes de publicarlo. Si no nos convence, no entra.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4 pb-4 border-b border-white/5">
+                <div class="w-10 h-10 rounded-xl bg-obsidian-950 border border-white/10 flex items-center justify-center text-nexo-500 shrink-0">
+                  <i data-lucide="box" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm font-bold text-white">Ediciones numeradas</h3>
+                  <p class="text-xs text-gray-400 mt-1">Trabajamos directo con estudios y fabricantes para traer tiradas cortas.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-obsidian-950 border border-white/10 flex items-center justify-center text-nexo-500 shrink-0">
+                  <i data-lucide="message-square-heart" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm font-bold text-white">Asesoría de verdad</h3>
+                  <p class="text-xs text-gray-400 mt-1">Te ayudamos a elegir según tu presupuesto y tu setup, no según el margen.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-obsidian-950 border-t border-white/10 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-8 border-b border-white/10">
+          <div class="space-y-2">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-nexo-500 flex items-center justify-center text-black">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.3L18.5 8 12 11.7 5.5 8 12 4.3zM5 9.9l6 3.4v6.3l-6-3.3V9.9zm8 9.7v-6.3l6-3.4v6.4l-6 3.3z"/>
+                </svg>
+              </div>
+              <div class="font-extrabold text-base text-white">
+                <span class="js-store-name-prefix">JM NEXO</span> <span class="text-nexo-500 js-store-name-suffix">STORE</span>
+              </div>
+            </div>
+            <p class="text-xs text-gray-500 max-w-xs">Tecnología de alto rendimiento, figuras coleccionables y equipamiento gaming con envío a todo el Perú.</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-6 text-xs font-semibold text-gray-400">
+            <button onclick="filterAndScroll('Tecnología')" class="hover:text-white transition-colors">Tecnología</button>
+            <button onclick="filterAndScroll('Figuras')" class="hover:text-white transition-colors">Figuras</button>
+            <button onclick="filterAndScroll('Gaming')" class="hover:text-white transition-colors">Gaming</button>
+            <button onclick="openClubModal()" class="hover:text-white transition-colors">Club VIP</button>
+            <button onclick="openAdminLogin()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-obsidian-900 border border-white/10 hover:border-nexo-500 text-gray-300 hover:text-nexo-500 transition-colors">
+              <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+              <span>Panel Admin</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-gray-500">
+          <p>© 2026 <span class="js-store-name-prefix">JM NEXO</span> <span class="js-store-name-suffix">STORE</span>. Todos los derechos reservados.</p>
+          <p>Pagos seguros · Yape · Plin · Tarjetas · Contraentrega</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Botón flotante de WhatsApp -->
+    <button
+      onclick="orderViaWhatsAppGeneral()"
+      class="fixed bottom-5 right-5 z-40 inline-flex items-center gap-2.5 px-5 py-3.5 rounded-full bg-[#25a87a] hover:bg-[#1f946b] text-white font-extrabold text-xs uppercase tracking-wider shadow-xl shadow-black/40 transition-transform hover:scale-105"
+    >
+      <i data-lucide="message-circle" class="w-4 h-4"></i>
+      <span>PEDIR POR WHATSAPP</span>
+    </button>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- VISTA 2: PANEL DE ADMINISTRACIÓN (/admin)                 -->
+  <!-- ========================================================= -->
+  <div id="admin-view" class="hidden min-h-screen bg-obsidian-950 text-gray-100 flex">
+
+    <!-- Overlay móvil para sidebar -->
+    <div id="admin-mobile-overlay" onclick="toggleAdminSidebar()" class="hidden fixed inset-0 bg-black/70 z-40 lg:hidden"></div>
+
+    <!-- Barra Lateral Admin -->
+    <aside id="admin-sidebar" class="fixed lg:sticky top-0 left-0 z-50 h-screen w-64 bg-obsidian-900 border-r border-white/10 flex flex-col justify-between -translate-x-full lg:translate-x-0 transition-transform duration-300 shrink-0">
+      <div>
+        <!-- Logo Admin -->
+        <div class="p-5 border-b border-white/10 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-nexo-500 flex items-center justify-center text-black shrink-0">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L3 7v10l9 5 9-5V7l-9-5zm0 2.3L18.5 8 12 11.7 5.5 8 12 4.3zM5 9.9l6 3.4v6.3l-6-3.3V9.9zm8 9.7v-6.3l6-3.4v6.4l-6 3.3z"/>
+              </svg>
+            </div>
+            <div class="leading-tight">
+              <div class="font-extrabold text-sm text-white">
+                <span class="js-store-name-prefix">JM NEXO</span> <span class="text-nexo-500 js-store-name-suffix">STORE</span>
+              </div>
+              <div class="text-[9px] tracking-[0.2em] text-gray-500 uppercase font-semibold">ADMINISTRACIÓN</div>
+            </div>
+          </div>
+          <button onclick="toggleAdminSidebar()" class="lg:hidden text-gray-400 hover:text-white p-1">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Estado de sincronización en tiempo real con Firebase -->
+        <div class="px-4 pt-4">
+          <div id="firebase-sync-status" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-obsidian-950 border border-white/10 text-[11px] font-semibold text-gray-400">
+            <span id="firebase-sync-dot" class="w-2 h-2 rounded-full bg-amber-400 animate-pulse shrink-0"></span>
+            <span id="firebase-sync-text" class="truncate">Conectando Firebase...</span>
+          </div>
+        </div>
+
+        <!-- Menú Admin -->
+        <nav class="p-4 space-y-1.5">
+          <button id="nav-btn-resumen" onclick="switchAdminTab('resumen')" class="admin-nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold bg-nexo-500 text-black transition-colors">
+            <span class="flex items-center gap-3"><i data-lucide="layout-dashboard" class="w-4 h-4"></i> Resumen</span>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+          <button id="nav-btn-productos" onclick="switchAdminTab('productos')" class="admin-nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors">
+            <span class="flex items-center gap-3"><i data-lucide="shopping-bag" class="w-4 h-4"></i> Productos</span>
+          </button>
+          <button id="nav-btn-categorias" onclick="switchAdminTab('categorias')" class="admin-nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors">
+            <span class="flex items-center gap-3"><i data-lucide="tag" class="w-4 h-4"></i> Categorías</span>
+          </button>
+          <button id="nav-btn-pedidos" onclick="switchAdminTab('pedidos')" class="admin-nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors">
+            <span class="flex items-center gap-3"><i data-lucide="clipboard-list" class="w-4 h-4"></i> Pedidos</span>
+          </button>
+          <button id="nav-btn-ajustes" onclick="switchAdminTab('ajustes')" class="admin-nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors">
+            <span class="flex items-center gap-3"><i data-lucide="settings" class="w-4 h-4"></i> Ajustes</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Sesión activa + Volver a tienda -->
+      <div class="p-4 space-y-3 border-t border-white/10">
+        <div class="p-3.5 rounded-2xl bg-obsidian-950 border border-white/10 space-y-3">
+          <div class="flex items-center gap-2.5">
+            <img id="admin-avatar-display" src="https://placehold.co/80x80/b4f035/07080a?text=JO" alt="Admin" class="w-9 h-9 rounded-full object-cover border border-nexo-500/40 shrink-0" />
+            <div class="min-w-0">
+              <div class="text-[9px] font-bold tracking-widest uppercase text-gray-500">SESIÓN ACTIVA</div>
+              <div id="admin-name-display" class="text-xs font-bold text-white truncate">Jimmy Oblitas</div>
+              <div id="admin-email-display" class="text-[11px] text-gray-400 truncate">jimmyoblitas19@gmail.com</div>
+            </div>
+          </div>
+          <button onclick="logoutAdmin()" class="w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-obsidian-900 border border-white/10 hover:border-red-500/50 hover:text-red-400 text-[11px] font-bold uppercase tracking-wider text-gray-300 transition-colors">
+            <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+            <span>CERRAR SESIÓN</span>
+          </button>
+        </div>
+
+        <button onclick="showStorefront()" class="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-gray-400 hover:text-nexo-500 transition-colors">
+          <i data-lucide="store" class="w-4 h-4"></i>
+          <span>Ver la tienda</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Contenido Principal Admin -->
+    <main class="flex-1 min-w-0 p-4 sm:p-8 lg:p-10">
+      <div class="max-w-6xl mx-auto space-y-8">
+
+        <!-- Cabecera móvil del admin -->
+        <div class="flex lg:hidden items-center justify-between pb-4 border-b border-white/10">
+          <button onclick="toggleAdminSidebar()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-obsidian-900 border border-white/10 text-xs font-bold text-white">
+            <i data-lucide="menu" class="w-4 h-4 text-nexo-500"></i>
+            <span>Menú Admin</span>
+          </button>
+          <button onclick="showStorefront()" class="text-xs font-semibold text-nexo-500">Ver tienda →</button>
+        </div>
+
+        <!-- TAB 1: RESUMEN -->
+        <section id="admin-tab-resumen" class="space-y-8">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div id="admin-date-display" class="text-[11px] font-bold tracking-[0.18em] uppercase text-gray-500">MARTES, 24 DE NOVIEMBRE DE 2026</div>
+              <h1 class="text-2xl sm:text-3xl font-black text-white mt-1">Resumen de la tienda</h1>
+              <p class="text-sm text-gray-400 mt-1">Hola, <span id="admin-user-greeting" class="text-gray-200 font-semibold">Jimmy Oblitas</span>. Aquí tienes el estado de <span class="js-store-name-prefix">JM NEXO</span> <span class="js-store-name-suffix">STORE</span>.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <button onclick="openProductModal()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-obsidian-900 border border-white/15 hover:border-nexo-500 text-xs font-bold uppercase tracking-wider text-white transition-colors">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                <span>AÑADIR PRODUCTO</span>
+              </button>
+              <button onclick="switchAdminTab('pedidos')" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-nexo-500 hover:bg-nexo-400 text-black text-xs font-extrabold uppercase tracking-wider transition-colors">
+                <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+                <span>VER PEDIDOS</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 4 Tarjetas KPI -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div class="bg-obsidian-900 border border-white/10 rounded-2xl p-5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold tracking-widest uppercase text-gray-500">INGRESOS CONFIRMADOS</span>
+                <span class="w-8 h-8 rounded-lg bg-nexo-500/10 text-nexo-500 flex items-center justify-center"><i data-lucide="trending-up" class="w-4 h-4"></i></span>
+              </div>
+              <div id="kpi-revenue" class="text-2xl font-black text-white mt-3">S/ 0.00</div>
+              <div id="kpi-valid-orders" class="text-xs text-gray-500 mt-1">0 pedidos válidos</div>
+            </div>
+
+            <div class="bg-obsidian-900 border border-white/10 rounded-2xl p-5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold tracking-widest uppercase text-gray-500">PEDIDOS TOTALES</span>
+                <span class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center"><i data-lucide="receipt" class="w-4 h-4"></i></span>
+              </div>
+              <div id="kpi-orders" class="text-2xl font-black text-white mt-3">0</div>
+              <div id="kpi-pending-orders" class="text-xs text-gray-500 mt-1">0 pendientes de pago</div>
+            </div>
+
+            <div class="bg-obsidian-900 border border-white/10 rounded-2xl p-5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold tracking-widest uppercase text-gray-500">PRODUCTOS PUBLICADOS</span>
+                <span class="w-8 h-8 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center"><i data-lucide="package" class="w-4 h-4"></i></span>
+              </div>
+              <div id="kpi-published" class="text-2xl font-black text-white mt-3">0</div>
+              <div id="kpi-total-products" class="text-xs text-gray-500 mt-1">0 en el catálogo</div>
+            </div>
+
+            <div class="bg-obsidian-900 border border-white/10 rounded-2xl p-5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold tracking-widest uppercase text-gray-500">STOCK BAJO</span>
+                <span class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center"><i data-lucide="alert-triangle" class="w-4 h-4"></i></span>
+              </div>
+              <div id="kpi-low-stock" class="text-2xl font-black text-white mt-3">0</div>
+              <div class="text-xs text-gray-500 mt-1">10 unidades o menos</div>
+            </div>
+          </div>
+
+          <!-- Grid Últimos Pedidos + Stock Bajo -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-7 bg-obsidian-900 border border-white/10 rounded-2xl p-5 flex flex-col">
+              <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                <h2 class="text-base font-bold text-white">Últimos pedidos</h2>
+                <button onclick="switchAdminTab('pedidos')" class="text-xs font-semibold text-gray-400 hover:text-nexo-500">Ver todos ›</button>
+              </div>
+              <div id="admin-recent-orders" class="flex-1 pt-4">
+                <!-- Dinámico -->
+              </div>
+            </div>
+
+            <div class="lg:col-span-5 bg-obsidian-900 border border-white/10 rounded-2xl p-5 flex flex-col">
+              <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                <h2 class="text-base font-bold text-white">Stock bajo</h2>
+                <button onclick="switchAdminTab('productos')" class="text-xs font-semibold text-gray-400 hover:text-nexo-500">Gestionar ›</button>
+              </div>
+              <div id="admin-low-stock-list" class="space-y-3 pt-4">
+                <!-- Dinámico -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Productos Recientes -->
+          <div class="bg-obsidian-900 border border-white/10 rounded-2xl p-5">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10">
+              <h2 class="text-base font-bold text-white">Productos recientes</h2>
+              <button onclick="switchAdminTab('productos')" class="text-xs font-semibold text-gray-400 hover:text-nexo-500">Editar catálogo ›</button>
+            </div>
+            <div id="admin-recent-products" class="divide-y divide-white/5 pt-2">
+              <!-- Dinámico -->
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 2: PRODUCTOS -->
+        <section id="admin-tab-productos" class="hidden space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h1 class="text-2xl font-black text-white">Gestión de Productos</h1>
+              <p class="text-xs text-gray-400 mt-1">Añade, edita precios, ajusta el stock o publica/oculta artículos en tiempo real.</p>
+            </div>
+            <button onclick="openProductModal()" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-nexo-500 hover:bg-nexo-400 text-black text-xs font-extrabold uppercase tracking-wider self-start">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>AÑADIR PRODUCTO</span>
+            </button>
+          </div>
+
+          <div class="bg-obsidian-900 border border-white/10 rounded-2xl overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-white/10 text-[10px] font-bold uppercase tracking-wider text-gray-500 bg-obsidian-950/60">
+                    <th class="py-3.5 px-5">Producto</th>
+                    <th class="py-3.5 px-4">Categoría</th>
+                    <th class="py-3.5 px-4">Precio</th>
+                    <th class="py-3.5 px-4">Stock</th>
+                    <th class="py-3.5 px-4">Estado</th>
+                    <th class="py-3.5 px-5 text-right">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-products-table" class="divide-y divide-white/5 text-sm">
+                  <!-- Dinámico -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: CATEGORÍAS -->
+        <section id="admin-tab-categorias" class="hidden space-y-6">
+          <div>
+            <h1 class="text-2xl font-black text-white">Categorías</h1>
+            <p class="text-xs text-gray-400 mt-1">Resumen del inventario distribuido por cada línea de producto.</p>
+          </div>
+          <div id="admin-categories-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Dinámico -->
+          </div>
+        </section>
+
+        <!-- TAB 4: PEDIDOS -->
+        <section id="admin-tab-pedidos" class="hidden space-y-6">
+          <div>
+            <h1 class="text-2xl font-black text-white">Pedidos</h1>
+            <p class="text-xs text-gray-400 mt-1">Controla los pedidos realizados desde tu tienda en línea y actualiza su estado.</p>
+          </div>
+
+          <div class="bg-obsidian-900 border border-white/10 rounded-2xl overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-white/10 text-[10px] font-bold uppercase tracking-wider text-gray-500 bg-obsidian-950/60">
+                    <th class="py-3.5 px-5">ID / Fecha</th>
+                    <th class="py-3.5 px-4">Cliente</th>
+                    <th class="py-3.5 px-4">Artículos</th>
+                    <th class="py-3.5 px-4">Total</th>
+                    <th class="py-3.5 px-5">Estado</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-orders-table" class="divide-y divide-white/5 text-sm">
+                  <!-- Dinámico -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 5: AJUSTES -->
+        <section id="admin-tab-ajustes" class="hidden space-y-6">
+          <div>
+            <h1 class="text-2xl font-black text-white">Ajustes de la tienda</h1>
+            <p class="text-xs text-gray-400 mt-1">Personaliza el nombre, WhatsApp de pedidos, envío gratis y administradores autorizados.</p>
+          </div>
+
+          <!-- Configuración General -->
+          <form onsubmit="saveStoreSettings(event)" class="bg-obsidian-900 border border-white/10 rounded-2xl p-6 max-w-2xl space-y-5">
+            <h2 class="text-base font-bold text-white">Datos generales</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Nombre (Parte 1)</label>
+                <input id="setting-name-prefix" type="text" required class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Nombre (Acento Verde)</label>
+                <input id="setting-name-suffix" type="text" required class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Número WhatsApp (con código país)</label>
+                <input id="setting-whatsapp" type="text" required placeholder="51987654321" class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5">Envío gratis desde (S/)</label>
+                <input id="setting-free-shipping" type="number" step="1" min="0" required class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500" />
+              </div>
+            </div>
+
+            <button type="submit" class="px-6 py-3 rounded-full bg-nexo-500 hover:bg-nexo-400 text-black text-xs font-extrabold uppercase tracking-wider transition-colors">
+              Guardar cambios en Firebase
+            </button>
+          </form>
+
+          <!-- Seguridad y Acceso con Google -->
+          <div class="bg-obsidian-900 border border-white/10 rounded-2xl p-6 max-w-2xl space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h2 class="text-base font-bold text-white flex items-center gap-2">
+                  <i data-lucide="shield-check" class="w-4 h-4 text-nexo-500"></i>
+                  Firebase Auth + Sincronización en Tiempo Real
+                </h2>
+                <p class="text-xs text-gray-400 mt-1">Solo los correos Gmail de esta lista pueden entrar al panel de administración.</p>
+              </div>
+              <span id="google-auth-mode-badge" class="self-start px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-nexo-500/15 text-nexo-500 border border-nexo-500/30">
+                Firebase Conectado
+              </span>
+            </div>
+
+            <!-- Lista de correos autorizados -->
+            <div id="authorized-admins-list" class="space-y-2">
+              <!-- Dinámico -->
+            </div>
+
+            <!-- Añadir otro Gmail autorizado -->
+            <form onsubmit="addAuthorizedAdmin(event)" class="flex flex-col sm:flex-row gap-2.5">
+              <input
+                id="new-admin-email"
+                type="email"
+                required
+                placeholder="otro.admin@gmail.com"
+                class="flex-1 bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500"
+              />
+              <button type="submit" class="px-5 py-2.5 rounded-xl bg-obsidian-850 border border-white/15 hover:border-nexo-500 text-xs font-bold uppercase tracking-wider text-white transition-colors">
+                + Autorizar Correo
+              </button>
+            </form>
+
+            <!-- Botón de respaldo para subir el catálogo base a Firestore -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-white/10">
+              <span class="text-xs text-gray-400">¿Tu base de datos Firestore está vacía?</span>
+              <button type="button" onclick="seedInitialProductsToCloud(true)" class="px-4 py-2 rounded-xl bg-obsidian-850 border border-white/15 hover:border-nexo-500 text-xs font-bold text-nexo-500 transition-colors">
+                Subir catálogo inicial a Firebase
+              </button>
+            </div>
+
+            <!-- Checklist rápido para Firebase Console + GitHub Pages -->
+            <div class="p-4 rounded-xl bg-obsidian-950 border border-white/5 text-xs text-gray-400 space-y-1.5 leading-relaxed">
+              <p class="text-white font-semibold">Checklist en Firebase Console (proyecto: <code class="text-nexo-500">jm-nexo-store</code>):</p>
+              <p>1. En <strong>Authentication → Sign-in method</strong>, activa el proveedor <strong>Google</strong>.</p>
+              <p>2. En <strong>Authentication → Settings → Dominios autorizados</strong>, agrega tu dominio <code class="text-gray-200">tuusuario.github.io</code>.</p>
+              <p>3. En <strong>Firestore Database</strong>, crea la base de datos y publica reglas que permitan lectura pública y escritura para tu correo admin.</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- CARRITO DESLIZABLE                                        -->
+  <!-- ========================================================= -->
+  <div id="cart-drawer" class="hidden fixed inset-0 z-50">
+    <div id="cart-backdrop" onclick="toggleCart()" class="absolute inset-0 bg-black/75 backdrop-blur-sm"></div>
+    <div class="absolute top-0 right-0 h-full w-full max-w-md bg-obsidian-900 border-l border-white/10 flex flex-col shadow-2xl">
+      <div class="p-5 border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="shopping-bag" class="w-5 h-5 text-nexo-500"></i>
+          <h2 class="text-base font-extrabold text-white">Tu Carrito</h2>
+        </div>
+        <button onclick="toggleCart()" class="w-8 h-8 rounded-full bg-obsidian-850 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3">
+        <!-- Dinámico -->
+      </div>
+
+      <div id="cart-empty" class="flex-1 flex flex-col items-center justify-center p-8 text-center">
+        <div class="w-14 h-14 rounded-2xl bg-obsidian-850 border border-white/10 flex items-center justify-center text-gray-500 mb-3">
+          <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-sm font-bold text-white">Tu carrito está vacío</h3>
+        <p class="text-xs text-gray-400 mt-1">Explora nuestras colecciones y añade tus favoritos.</p>
+      </div>
+
+      <div id="cart-footer" class="hidden p-5 border-t border-white/10 bg-obsidian-950/70 space-y-4">
+        <div class="space-y-1.5 text-xs">
+          <div class="flex justify-between text-gray-400">
+            <span>Subtotal</span>
+            <span id="cart-subtotal" class="text-white font-semibold">S/ 0.00</span>
+          </div>
+          <div class="flex justify-between text-gray-400">
+            <span>Envío</span>
+            <span id="cart-shipping" class="text-nexo-500 font-semibold">Gratis</span>
+          </div>
+          <div class="flex justify-between text-base font-black text-white pt-2 border-t border-white/10">
+            <span>Total</span>
+            <span id="cart-total">S/ 0.00</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-2.5">
+          <button onclick="openCheckoutModal()" class="w-full py-3.5 rounded-full bg-nexo-500 hover:bg-nexo-400 text-black text-xs font-extrabold uppercase tracking-wider transition-colors">
+            Finalizar Pedido
+          </button>
+          <button onclick="orderCartViaWhatsApp()" class="w-full py-3 rounded-full bg-[#25a87a]/15 hover:bg-[#25a87a]/25 border border-[#25a87a]/40 text-[#25a87a] text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors">
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+            <span>Enviar pedido por WhatsApp</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MODAL: CHECKOUT                                           -->
+  <!-- ========================================================= -->
+  <div id="checkout-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    <div class="bg-obsidian-900 border border-white/10 rounded-3xl w-full max-w-md p-6 space-y-5 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-lg font-black text-white">Finalizar Compra</h3>
+          <p class="text-xs text-gray-400">Total a pagar: <span id="checkout-total-display" class="text-nexo-500 font-bold">S/ 0.00</span></p>
+        </div>
+        <button onclick="closeModal('checkout-modal')" class="text-gray-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="submitCheckout(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">Nombre completo</label>
+          <input id="checkout-name" type="text" required placeholder="Ej. Carlos Mendoza" class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500" />
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">Teléfono / WhatsApp</label>
+          <input id="checkout-phone" type="tel" required placeholder="987 654 321" class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500" />
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">Dirección de envío</label>
+          <input id="checkout-address" type="text" required placeholder="Av. Principal 123, Lima" class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500" />
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">Método de pago</label>
+          <select id="checkout-payment" class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500">
+            <option value="Yape / Plin">Yape / Plin</option>
+            <option value="Tarjeta Crédito / Débito">Tarjeta Crédito / Débito</option>
+            <option value="Transferencia Bancaria">Transferencia Bancaria</option>
+            <option value="Pago Contraentrega">Pago Contraentrega</option>
+          </select>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 rounded-full bg-nexo-500 hover:bg-nexo-400 text-black text-xs font-extrabold uppercase tracking-wider mt-2 transition-colors">
+          Confirmar Pedido
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MODAL: ACCESO ADMIN CON CUENTA DE GOOGLE                  -->
+  <!-- ========================================================= -->
+  <div id="admin-login-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    <div class="bg-obsidian-900 border border-white/10 rounded-3xl w-full max-w-md p-6 space-y-5 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-nexo-500/15 border border-nexo-500/30 flex items-center justify-center text-nexo-500">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-black text-white">Acceso Administrador</h3>
+            <p class="text-[11px] text-gray-400">Verificación con cuenta de Google</p>
+          </div>
+        </div>
+        <button onclick="closeAdminLoginModal()" class="text-gray-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Mensaje de error -->
+      <div id="login-error-box" class="hidden p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-300 flex items-start gap-2.5">
+        <i data-lucide="alert-circle" class="w-4 h-4 text-red-400 shrink-0 mt-0.5"></i>
+        <span id="login-error-text">Error de autenticación.</span>
+      </div>
+
+      <!-- Paso 1: Botón de Iniciar Sesión con Google -->
+      <div id="google-login-step-1" class="space-y-4">
+        <p class="text-xs text-gray-400 leading-relaxed">
+          Inicia sesión con tu cuenta de Google autorizada para gestionar productos, stock y pedidos de <span class="text-white font-semibold">JM NEXO STORE</span> en tiempo real.
+        </p>
+
+        <!-- Botón oficial conectado a Firebase Google Auth -->
+        <button
+          id="google-firebase-btn"
+          type="button"
+          onclick="signInWithFirebaseGoogle()"
+          class="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-gray-900 font-bold text-sm py-3 px-4 rounded-full transition-all shadow-lg disabled:opacity-60"
+        >
+          <svg class="w-5 h-5" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96z"/>
+          </svg>
+          <span id="google-btn-label">Continuar con Google</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="showGoogleDemoChooser()"
+          class="w-full text-center text-[11px] text-gray-400 hover:text-nexo-500 transition-colors pt-1"
+        >
+          ¿Estás en vista previa sin dominio autorizado? Probar acceso rápido →
+        </button>
+
+        <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-gray-500">
+          <span>Cuenta autorizada:</span>
+          <span class="text-gray-300 font-medium">jimmyoblitas19@gmail.com</span>
+        </div>
+      </div>
+
+      <!-- Paso 2 (Solo en Modo Vista Previa): Selector simulado de cuenta de Google -->
+      <div id="google-login-step-2" class="hidden space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-white">Elige una cuenta (Modo Vista Previa)</span>
+          <button onclick="resetGoogleLoginModal()" class="text-[11px] text-gray-400 hover:text-white">← Volver</button>
+        </div>
+
+        <button
+          type="button"
+          onclick="selectDemoGoogleAccount('jimmyoblitas19@gmail.com', 'Jimmy Oblitas')"
+          class="w-full flex items-center gap-3 p-3 rounded-2xl bg-obsidian-950 border border-white/10 hover:border-nexo-500 transition-colors text-left"
+        >
+          <div class="w-9 h-9 rounded-full bg-nexo-500 text-black font-black text-xs flex items-center justify-center shrink-0">JO</div>
+          <div class="min-w-0 flex-1">
+            <div class="text-xs font-bold text-white">Jimmy Oblitas</div>
+            <div class="text-[11px] text-gray-400 truncate">jimmyoblitas19@gmail.com</div>
+          </div>
+          <span class="text-[10px] font-bold text-nexo-500 bg-nexo-500/10 px-2 py-0.5 rounded-full">Admin</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="selectDemoGoogleAccount('visitante.prueba@gmail.com', 'Usuario Sin Permisos')"
+          class="w-full flex items-center gap-3 p-3 rounded-2xl bg-obsidian-950 border border-white/10 hover:border-red-500/50 transition-colors text-left"
+        >
+          <div class="w-9 h-9 rounded-full bg-gray-700 text-white font-bold text-xs flex items-center justify-center shrink-0">UP</div>
+          <div class="min-w-0 flex-1">
+            <div class="text-xs font-bold text-gray-300">Usuario Sin Permisos</div>
+            <div class="text-[11px] text-gray-500 truncate">visitante.prueba@gmail.com</div>
+          </div>
+          <span class="text-[10px] font-bold text-red-400 bg-red-500/10 px-2 py-0.5 rounded-full">Bloqueado</span>
+        </button>
+
+        <form onsubmit="handleCustomDemoGmail(event)" class="pt-2 border-t border-white/10 flex gap-2">
+          <input id="demo-custom-gmail" type="email" required placeholder="Probar otro correo@gmail.com" class="flex-1 bg-obsidian-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-nexo-500" />
+          <button type="submit" class="px-3.5 py-2 rounded-xl bg-obsidian-850 border border-white/15 hover:border-nexo-500 text-xs font-bold text-white">Probar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MODAL: AÑADIR / EDITAR PRODUCTO (ADMIN)                   -->
+  <!-- ========================================================= -->
+  <div id="product-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    <div class="bg-obsidian-900 border border-white/10 rounded-3xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 space-y-5 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <h3 id="product-modal-title" class="text-lg font-black text-white">Añadir Nuevo Producto</h3>
+        <button onclick="closeModal('product-modal')" class="text-gray-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="saveProduct(event)" class="space-y-4">
+        <input id="prod-id" type="hidden" />
+
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">Nombre del producto</label>
+          <input id="prod-name" type="text" required placeholder="Ej. Auriculares Aurora X7" class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">Categoría</label>
+            <select id="prod-category" class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500">
+              <option value="Tecnología">Tecnología</option>
+              <option value="Figuras">Figuras</option>
+              <option value="Gaming">Gaming</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">Etiqueta (Badge)</label>
+            <input id="prod-badge" type="text" placeholder="NUEVO, -20%, TOP VENTAS" class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">Precio (S/)</label>
+            <input id="prod-price" type="number" step="0.01" min="0" required placeholder="299.00" class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">Precio Antes</label>
+            <input id="prod-oldprice" type="number" step="0.01" min="0" placeholder="Opcional" class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">Stock</label>
+            <input id="prod-stock" type="number" min="0" required placeholder="15" class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">Descripción corta</label>
+          <textarea id="prod-desc" rows="2" required placeholder="Características principales del producto..." class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-gray-400 mb-1">URL de Imagen</label>
+          <input id="prod-image" type="url" placeholder="https://..." class="w-full bg-obsidian-950 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-nexo-500" />
+        </div>
+
+        <label class="flex items-center gap-2.5 cursor-pointer select-none pt-1">
+          <input id="prod-published" type="checkbox" checked class="w-4 h-4 rounded accent-nexo-500" />
+          <span class="text-xs font-semibold text-gray-300">Visible inmediatamente en la tienda</span>
+        </label>
+
+        <div class="flex justify-end gap-2.5 pt-2">
+          <button type="button" onclick="closeModal('product-modal')" class="px-5 py-2.5 rounded-full bg-obsidian-850 border border-white/10 text-xs font-bold text-gray-300 hover:text-white">Cancelar</button>
+          <button type="submit" class="px-6 py-2.5 rounded-full bg-nexo-500 hover:bg-nexo-400 text-black text-xs font-extrabold uppercase tracking-wider">Guardar Producto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MODAL: ÚNETE AL CLUB                                      -->
+  <!-- ========================================================= -->
+  <div id="club-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    <div class="bg-obsidian-900 border border-white/10 rounded-3xl w-full max-w-md p-6 space-y-5 shadow-2xl text-center">
+      <div class="flex justify-end">
+        <button onclick="closeModal('club-modal')" class="text-gray-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="w-12 h-12 rounded-2xl bg-nexo-500/15 border border-nexo-500/30 flex items-center justify-center text-nexo-500 mx-auto -mt-4">
+        <i data-lucide="zap" class="w-6 h-6"></i>
+      </div>
+      <div>
+        <h3 class="text-xl font-black text-white">Únete al Club NEXO</h3>
+        <p class="text-xs text-gray-400 mt-1.5 leading-relaxed">Recibe acceso anticipado a figuras limitadas y un <span class="text-nexo-500 font-bold">10% de descuento</span> en tu primer pedido.</p>
+      </div>
+      <form onsubmit="submitClub(event)" class="space-y-3">
+        <input id="club-email" type="email" required placeholder="tu.correo@gmail.com" class="w-full bg-obsidian-950 border border-white/10 rounded-full px-4 py-3 text-sm text-white text-center focus:outline-none focus:border-nexo-500" />
+        <button type="submit" class="w-full py-3 rounded-full bg-nexo-500 hover:bg-nexo-400 text-black text-xs font-extrabold uppercase tracking-wider">
+          Quiero mi 10% OFF →
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- NOTIFICACIÓN TOAST                                        -->
+  <!-- ========================================================= -->
+  <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] items-center gap-2.5 px-5 py-3 rounded-full bg-obsidian-850 border border-nexo-500/40 text-white text-xs font-bold shadow-2xl">
+    <span class="w-2 h-2 rounded-full bg-nexo-500"></span>
+    <span id="toast-message">Acción completada</span>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- LÓGICA DE LA APLICACIÓN + FIREBASE (TIEMPO REAL)          -->
+  <!-- ========================================================= -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import {
+      getAuth,
+      GoogleAuthProvider,
+      signInWithPopup,
+      signInAnonymously,
+      signInWithCustomToken,
+      signOut,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      updateDoc,
+      deleteDoc,
+      addDoc,
+      collection,
+      onSnapshot
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // =========================================================
+    // CONFIGURACIÓN DE TU PROYECTO FIREBASE (JM NEXO STORE)
+    // =========================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyAqwwhdOyHnNLyI4iAn3WAwo5qQiPruo9o",
+      authDomain: "jm-nexo-store.firebaseapp.com",
+      projectId: "jm-nexo-store",
+      storageBucket: "jm-nexo-store.firebasestorage.app",
+      messagingSenderId: "660789791569",
+      appId: "1:660789791569:web:0b1df6628df36032ee6170"
+    };
+
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'jm-nexo-store';
+    const DEFAULT_AUTHORIZED_EMAILS = ['jimmyoblitas19@gmail.com'];
+
+    // Inicializar Firebase App, Auth y Firestore
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const googleProvider = new GoogleAuthProvider();
+    googleProvider.setCustomParameters({ prompt: 'select_account' });
+
+    // Referencias estrictas de colecciones en Firestore
+    const productsCol = () => collection(db, 'artifacts', appId, 'public', 'data', 'products');
+    const ordersCol = () => collection(db, 'artifacts', appId, 'public', 'data', 'orders');
+    const clubCol = () => collection(db, 'artifacts', appId, 'public', 'data', 'club_subscribers');
+    const storeConfigDoc = () => doc(db, 'artifacts', appId, 'public', 'data', 'config', 'store');
+
+    let cloudConnected = false;
+    let listenersStarted = false;
+    let autoSeedAttempted = false;
+
+    // Catálogo inicial por defecto (respaldo local y plantilla para poblar Firebase la primera vez)
+    const INITIAL_PRODUCTS = [
+      {
+        id: 'prod-1',
+        name: 'Auriculares Aurora X7',
+        category: 'Tecnología',
+        description: 'Audio espacial 7.1, 60 h de batería y cancelación activa.',
+        price: 429.00,
+        oldPrice: 529.00,
+        badge: '-19%',
+        badgeType: 'dark',
+        rating: 4.8,
+        reviews: 412,
+        stock: 18,
+        published: true,
+        createdAt: 1700000001000,
+        image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=80',
+      },
+      {
+        id: 'prod-2',
+        name: 'Teclado Kraken 75 HE',
+        category: 'Tecnología',
+        description: 'Switches magnéticos, 8K polling y ajuste de actuación.',
+        price: 349.00,
+        oldPrice: null,
+        badge: 'NUEVO',
+        badgeType: 'lime',
+        rating: 4.9,
+        reviews: 268,
+        stock: 24,
+        published: true,
+        createdAt: 1700000002000,
+        image: 'https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&w=700&q=80',
+      },
+      {
+        id: 'prod-3',
+        name: 'Monitor Vortex 27" QHD',
+        category: 'Tecnología',
+        description: '240 Hz, 1 ms y panel QD-OLED con HDR verdadero.',
+        price: 1799.00,
+        oldPrice: 2099.00,
+        badge: '-14%',
+        badgeType: 'dark',
+        rating: 4.7,
+        reviews: 189,
+        stock: 12,
+        published: true,
+        createdAt: 1700000003000,
+        image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=700&q=80',
+      },
+      {
+        id: 'prod-4',
+        name: 'Ratón Phantom 8K',
+        category: 'Gaming',
+        description: '49 g, sensor de 36K DPI y 8K de sondeo inalámbrico.',
+        price: 289.00,
+        oldPrice: null,
+        badge: 'TOP VENTAS',
+        badgeType: 'orange',
+        rating: 4.9,
+        reviews: 531,
+        stock: 31,
+        published: true,
+        createdAt: 1700000004000,
+        image: 'https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=700&q=80',
+      },
+      {
+        id: 'prod-5',
+        name: 'Estatua Cyber Ronin',
+        category: 'Figuras',
+        description: 'Resina pintada a mano, escala 1/7 con base iluminada LED.',
+        price: 259.00,
+        oldPrice: 299.00,
+        badge: 'LIMITADA',
+        badgeType: 'orange',
+        rating: 5.0,
+        reviews: 94,
+        stock: 6,
+        published: true,
+        createdAt: 1700000005000,
+        image: 'https://images.unsplash.com/photo-1608889175123-8ee362201f81?auto=format&fit=crop&w=700&q=80',
+      },
+      {
+        id: 'prod-6',
+        name: 'Figura Kaito Zero 1/7',
+        category: 'Figuras',
+        description: 'Edición numerada de estudio con piezas intercambiables.',
+        price: 189.00,
+        oldPrice: null,
+        badge: 'NUEVO',
+        badgeType: 'lime',
+        rating: 4.9,
+        reviews: 76,
+        stock: 9,
+        published: true,
+        createdAt: 1700000006000,
+        image: 'https://images.unsplash.com/photo-1559535332-db9971090158?auto=format&fit=crop&w=700&q=80',
+      },
+      {
+        id: 'prod-7',
+        name: 'Mando Pro Pulse Wireless',
+        category: 'Gaming',
+        description: 'Joysticks Hall Effect sin drift, gatillos adaptativos y RGB.',
+        price: 219.00,
+        oldPrice: 259.00,
+        badge: '-15%',
+        badgeType: 'dark',
+        rating: 4.8,
+        reviews: 310,
+        stock: 15,
+        published: true,
+        createdAt: 1700000007000,
+        image: 'https://images.unsplash.com/photo-1592840496694-26d035b52b48?auto=format&fit=crop&w=700&q=80',
+      },
+      {
+        id: 'prod-8',
+        name: 'Barra LED Ambient Pro',
+        category: 'Tecnología',
+        description: 'Sincronización con pantalla y temperatura regulable para monitor.',
+        price: 129.00,
+        oldPrice: null,
+        badge: '',
+        badgeType: 'dark',
+        rating: 4.7,
+        reviews: 142,
+        stock: 22,
+        published: true,
+        createdAt: 1700000008000,
+        image: 'https://images.unsplash.com/photo-1616588589676-62b3bd4ff6d2?auto=format&fit=crop&w=700&q=80',
+      },
+    ];
+
+    // Estado global sincronizado con Firestore
+    const state = {
+      settings: {
+        namePrefix: 'JM NEXO',
+        nameSuffix: 'STORE',
+        whatsapp: '51987654321',
+        freeShippingMin: 299,
+      },
+      admin: {
+        authenticated: false,
+        email: 'jimmyoblitas19@gmail.com',
+        name: 'Jimmy Oblitas',
+        avatar: 'https://placehold.co/80x80/b4f035/07080a?text=JO',
+        authorizedEmails: [...DEFAULT_AUTHORIZED_EMAILS],
+        currentTab: 'resumen',
+      },
+      activeFilter: 'Todo',
+      searchQuery: '',
+      wishlist: [],
+      cart: [],
+      orders: [],
+      categoriesMeta: [
+        {
+          name: 'Tecnología',
+          desc: 'Audio, periféricos y pantallas que rinden al máximo',
+          image: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=800&q=80',
+        },
+        {
+          name: 'Figuras',
+          desc: 'Coleccionables, ediciones limitadas y estatuas 1/7',
+          image: 'https://images.unsplash.com/photo-1608889476561-6242cfdbf622?auto=format&fit=crop&w=800&q=80',
+        },
+        {
+          name: 'Gaming',
+          desc: 'Mandos, ratones ultraligeros y setup para jugar mejor',
+          image: 'https://images.unsplash.com/photo-1600080972464-8e5f35f63d08?auto=format&fit=crop&w=800&q=80',
+        },
+      ],
+      products: INITIAL_PRODUCTS.map(p => ({ ...p })),
+    };
+
+    // Actualiza el indicador visual de conexión con Firebase
+    function setSyncStatus(status, text) {
+      const dot = document.getElementById('firebase-sync-dot');
+      const label = document.getElementById('firebase-sync-text');
+      const badge = document.getElementById('google-auth-mode-badge');
+
+      if (dot && label) {
+        label.textContent = text;
+        if (status === 'live') {
+          dot.className = 'w-2 h-2 rounded-full bg-nexo-500 shrink-0';
+        } else if (status === 'warn') {
+          dot.className = 'w-2 h-2 rounded-full bg-amber-400 shrink-0';
+        } else {
+          dot.className = 'w-2 h-2 rounded-full bg-red-500 shrink-0';
+        }
+      }
+
+      if (badge) {
+        if (status === 'live') {
+          badge.textContent = 'Firebase en Vivo';
+          badge.className = 'self-start px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-nexo-500/15 text-nexo-500 border border-nexo-500/30';
+        } else {
+          badge.textContent = 'Revisa reglas Firestore';
+          badge.className = 'self-start px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/15 text-amber-400 border border-amber-500/30';
+        }
+      }
+    }
+
+    // Sube los productos iniciales a Firestore si la colección está vacía
+    async function seedInitialProductsToCloud(manualTrigger = false) {
+      try {
+        for (const p of INITIAL_PRODUCTS) {
+          await setDoc(doc(productsCol(), String(p.id)), p, { merge: true });
+        }
+        await setDoc(storeConfigDoc(), {
+          ...state.settings,
+          authorizedEmails: state.admin.authorizedEmails,
+        }, { merge: true });
+        if (manualTrigger) {
+          showToast('Catálogo inicial sincronizado en Firebase');
+        }
+      } catch (err) {
+        console.warn('No se pudo subir el catálogo inicial a Firestore:', err.code || err.message);
+        if (manualTrigger) {
+          showToast('No se pudo escribir en Firestore. Revisa tus reglas de seguridad.');
+        }
+      }
+    }
+
+    // Inicia listeners en tiempo real (onSnapshot) de Productos, Pedidos y Ajustes
+    function startRealtimeSync() {
+      if (listenersStarted) return;
+      listenersStarted = true;
+
+      // 1. Productos en tiempo real
+      onSnapshot(
+        productsCol(),
+        (snapshot) => {
+          cloudConnected = true;
+          setSyncStatus('live', 'Firebase en tiempo real');
+
+          if (snapshot.empty) {
+            if (!autoSeedAttempted) {
+              autoSeedAttempted = true;
+              seedInitialProductsToCloud(false);
+            }
+          } else {
+            const list = [];
+            snapshot.forEach((docSnap) => {
+              list.push({ id: docSnap.id, ...docSnap.data() });
+            });
+            list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+            state.products = list;
+          }
+
+          renderCategories();
+          renderProducts();
+          updateCartUI();
+          if (state.admin.authenticated) renderAdminAll();
+        },
+        (error) => {
+          console.warn('Error leyendo productos de Firestore:', error.code || error.message);
+          cloudConnected = false;
+          setSyncStatus('warn', 'Modo local (revisa Firestore)');
+        }
+      );
+
+      // 2. Pedidos en tiempo real
+      onSnapshot(
+        ordersCol(),
+        (snapshot) => {
+          const list = [];
+          snapshot.forEach((docSnap) => {
+            list.push({ id: docSnap.id, ...docSnap.data() });
+          });
+          list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          state.orders = list;
+          if (state.admin.authenticated) renderAdminAll();
+        },
+        (error) => {
+          console.warn('Error leyendo pedidos de Firestore:', error.code || error.message);
+        }
+      );
+
+      // 3. Ajustes y correos autorizados en tiempo real
+      onSnapshot(
+        storeConfigDoc(),
+        (docSnap) => {
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            if (data.namePrefix) state.settings.namePrefix = data.namePrefix;
+            if (data.nameSuffix) state.settings.nameSuffix = data.nameSuffix;
+            if (data.whatsapp) state.settings.whatsapp = data.whatsapp;
+            if (typeof data.freeShippingMin === 'number') {
+              state.settings.freeShippingMin = data.freeShippingMin;
+            }
+            if (Array.isArray(data.authorizedEmails) && data.authorizedEmails.length > 0) {
+              state.admin.authorizedEmails = data.authorizedEmails;
+            }
+            applySettingsUI();
+            if (state.admin.authenticated) renderAdminAll();
+          }
+        },
+        (error) => {
+          console.warn('Error leyendo configuración de Firestore:', error.code || error.message);
+        }
+      );
+    }
+
+    // Autenticación inicial antes de iniciar consultas Firestore
+    async function initFirebaseSession() {
+      try {
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else if (!auth.currentUser) {
+          await signInAnonymously(auth);
+        }
+      } catch (err) {
+        console.info('Sesión anónima omitida:', err.code || err.message);
+      }
+      startRealtimeSync();
+    }
+
+    // Escuchar sesión activa de Google en Firebase Auth
+    onAuthStateChanged(auth, (user) => {
+      if (user && user.email) {
+        const emailLower = user.email.toLowerCase();
+        const allowed = state.admin.authorizedEmails.map(e => e.toLowerCase());
+        if (allowed.includes(emailLower)) {
+          state.admin.authenticated = true;
+          state.admin.email = emailLower;
+          state.admin.name = user.displayName || emailLower.split('@')[0];
+          state.admin.avatar = user.photoURL || `https://placehold.co/80x80/b4f035/07080a?text=${encodeURIComponent(emailLower.slice(0, 2).toUpperCase())}`;
+
+          if (window.location.hash === '#admin') {
+            showAdminPanel();
+          }
+        }
+      }
+    });
+
+    // Utilidad para formatear moneda en Soles
+    function formatPEN(amount) {
+      return 'S/ ' + Number(amount).toLocaleString('es-PE', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    }
+
+    // Mostrar notificación Toast
+    let toastTimer;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-message').textContent = message;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3200);
+    }
+
+    // Cerrar cualquier modal por ID
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('hidden');
+    }
+
+    // Menú móvil tienda
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+
+    // Sidebar móvil admin
+    function toggleAdminSidebar() {
+      const sidebar = document.getElementById('admin-sidebar');
+      const overlay = document.getElementById('admin-mobile-overlay');
+      sidebar.classList.toggle('-translate-x-full');
+      overlay.classList.toggle('hidden');
+    }
+
+    // Actualizar textos globales de configuración y campos del formulario de ajustes
+    function applySettingsUI() {
+      document.querySelectorAll('.js-store-name-prefix').forEach(el => el.textContent = state.settings.namePrefix);
+      document.querySelectorAll('.js-store-name-suffix').forEach(el => el.textContent = state.settings.nameSuffix);
+      document.querySelectorAll('.js-free-shipping').forEach(el => el.textContent = state.settings.freeShippingMin);
+
+      const prefixInput = document.getElementById('setting-name-prefix');
+      const suffixInput = document.getElementById('setting-name-suffix');
+      const waInput = document.getElementById('setting-whatsapp');
+      const shipInput = document.getElementById('setting-free-shipping');
+      if (prefixInput && document.activeElement !== prefixInput) prefixInput.value = state.settings.namePrefix;
+      if (suffixInput && document.activeElement !== suffixInput) suffixInput.value = state.settings.nameSuffix;
+      if (waInput && document.activeElement !== waInput) waInput.value = state.settings.whatsapp;
+      if (shipInput && document.activeElement !== shipInput) shipInput.value = state.settings.freeShippingMin;
+    }
+
+    // Fecha actual formateada para el panel admin
+    function updateAdminDate() {
+      const el = document.getElementById('admin-date-display');
+      if (!el) return;
+      const now = new Date();
+      el.textContent = now.toLocaleDateString('es-PE', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      }).toUpperCase();
+    }
+
+    // =========================================================
+    // RENDERIZADO DE LA TIENDA (CATEGORÍAS Y PRODUCTOS)
+    // =========================================================
+
+    function getBadgeStyle(type) {
+      if (type === 'lime') return 'bg-nexo-500 text-black';
+      if (type === 'orange') return 'bg-orange-500 text-white';
+      return 'bg-obsidian-950/90 text-nexo-500 border border-white/10';
+    }
+
+    function renderCategories() {
+      const grid = document.getElementById('categories-grid');
+      if (!grid) return;
+
+      grid.innerHTML = state.categoriesMeta.map(cat => {
+        const count = state.products.filter(p => p.published && p.category === cat.name).length;
+        return `
+          <div
+            onclick="filterAndScroll('${cat.name}')"
+            class="group relative h-72 rounded-3xl overflow-hidden border border-white/10 hover:border-nexo-500/50 cursor-pointer transition-all"
+          >
+            <img
+              src="${cat.image}"
+              onerror="this.src='https://placehold.co/600x500/101318/b4f035?text=${encodeURIComponent(cat.name)}'"
+              alt="${cat.name}"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/55 to-transparent"></div>
+            <div class="absolute bottom-5 left-5 right-5">
+              <div class="text-[10px] font-extrabold tracking-widest uppercase text-nexo-500">${count} PRODUCTOS</div>
+              <h3 class="text-2xl font-black text-white mt-1 group-hover:text-nexo-500 transition-colors">${cat.name}</h3>
+              <p class="text-xs text-gray-300 mt-1 line-clamp-2">${cat.desc}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      const empty = document.getElementById('products-empty');
+      if (!grid || !empty) return;
+
+      const query = state.searchQuery.trim().toLowerCase();
+      const filtered = state.products.filter(p => {
+        if (!p.published) return false;
+        const matchesCategory =
+          state.activeFilter === 'Todo' ||
+          (state.activeFilter === 'Ofertas' ? Boolean(p.oldPrice && p.oldPrice > p.price) : p.category === state.activeFilter);
+        const matchesSearch =
+          !query ||
+          p.name.toLowerCase().includes(query) ||
+          p.description.toLowerCase().includes(query) ||
+          p.category.toLowerCase().includes(query);
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        lucide.createIcons();
+        return;
+      }
+
+      empty.classList.add('hidden');
+      grid.innerHTML = filtered.map(p => {
+        const pid = String(p.id);
+        const isFav = state.wishlist.includes(pid);
+        const outOfStock = p.stock <= 0;
+        return `
+          <article class="group bg-obsidian-850 border border-white/10 hover:border-nexo-500/40 rounded-3xl overflow-hidden flex flex-col transition-all duration-300">
+            <div class="relative h-56 bg-obsidian-900 overflow-hidden">
+              <img
+                src="${p.image}"
+                onerror="this.src='https://placehold.co/500x400/101318/b4f035?text=${encodeURIComponent(p.name)}'"
+                alt="${p.name}"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ${outOfStock ? 'opacity-40 grayscale' : ''}"
+              />
+              ${p.badge ? `<span class="absolute top-3.5 left-3.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${getBadgeStyle(p.badgeType)}">${p.badge}</span>` : ''}
+              ${outOfStock ? `<span class="absolute inset-0 flex items-center justify-center bg-black/50 text-xs font-extrabold uppercase tracking-widest text-white">AGOTADO</span>` : ''}
+              <button
+                onclick="toggleWishlist('${pid}')"
+                class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-obsidian-950/75 backdrop-blur-sm border border-white/10 flex items-center justify-center ${isFav ? 'text-red-500' : 'text-gray-300 hover:text-white'} transition-colors"
+                aria-label="Favorito"
+              >
+                <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-current' : ''}"></i>
+              </button>
+            </div>
+
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <div class="flex items-center justify-between text-[11px] mb-1.5">
+                  <span class="uppercase tracking-wider text-gray-500 font-bold">${p.category}</span>
+                  <span class="flex items-center gap-1 text-gray-300 font-semibold">
+                    <i data-lucide="star" class="w-3 h-3 text-nexo-500 fill-current"></i>
+                    ${p.rating || 5.0} <span class="text-gray-500 font-normal">(${p.reviews || 1})</span>
+                  </span>
+                </div>
+                <h3 class="font-bold text-base text-white group-hover:text-nexo-500 transition-colors">${p.name}</h3>
+                <p class="text-xs text-gray-400 mt-1.5 line-clamp-2 leading-relaxed">${p.description}</p>
+              </div>
+
+              <div class="flex items-center justify-between gap-2 pt-3 border-t border-white/5">
+                <div>
+                  <div class="text-lg font-extrabold text-white">${formatPEN(p.price)}</div>
+                  ${p.oldPrice ? `<div class="text-[11px] text-gray-500 line-through">${formatPEN(p.oldPrice)}</div>` : `<div class="text-[11px] text-gray-500">${p.stock} disponibles</div>`}
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <button
+                    onclick="orderSingleViaWhatsApp('${pid}')"
+                    title="Pedir por WhatsApp"
+                    class="w-9 h-9 rounded-full bg-obsidian-900 border border-white/10 hover:border-[#25a87a] hover:text-[#25a87a] text-gray-300 flex items-center justify-center transition-colors"
+                  >
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                  </button>
+                  <button
+                    onclick="addToCart('${pid}')"
+                    ${outOfStock ? 'disabled' : ''}
+                    class="px-3.5 py-2 rounded-full bg-obsidian-900 hover:bg-nexo-500 hover:text-black border border-white/15 hover:border-nexo-500 text-white text-[11px] font-extrabold uppercase tracking-wider transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    + AÑADIR
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function setCategoryFilter(category) {
+      state.activeFilter = category;
+      document.querySelectorAll('.filter-pill').forEach(btn => {
+        const isActive = btn.dataset.filter === category;
+        btn.className = isActive
+          ? 'filter-pill px-4 py-2 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all bg-nexo-500 text-black'
+          : 'filter-pill px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all text-gray-400 hover:text-white';
+      });
+      renderProducts();
+    }
+
+    function filterAndScroll(category) {
+      setCategoryFilter(category);
+      const section = document.getElementById('catalogo');
+      if (section) section.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function handleSearch(value) {
+      state.searchQuery = value;
+      const desktop = document.getElementById('search-input');
+      const mobile = document.getElementById('mobile-search-input');
+      if (desktop && desktop.value !== value) desktop.value = value;
+      if (mobile && mobile.value !== value) mobile.value = value;
+      renderProducts();
+    }
+
+    function resetFilters() {
+      state.searchQuery = '';
+      const desktop = document.getElementById('search-input');
+      const mobile = document.getElementById('mobile-search-input');
+      if (desktop) desktop.value = '';
+      if (mobile) mobile.value = '';
+      setCategoryFilter('Todo');
+    }
+
+    function toggleWishlist(productId) {
+      const pid = String(productId);
+      const idx = state.wishlist.indexOf(pid);
+      if (idx > -1) {
+        state.wishlist.splice(idx, 1);
+        showToast('Eliminado de favoritos');
+      } else {
+        state.wishlist.push(pid);
+        showToast('Guardado en favoritos');
+      }
+      renderProducts();
+    }
+
+    // =========================================================
+    // CARRITO Y CHECKOUT (SINCRONIZADO CON FIREBASE)
+    // =========================================================
+
+    function toggleCart() {
+      document.getElementById('cart-drawer').classList.toggle('hidden');
+      updateCartUI();
+    }
+
+    function addToCart(productId) {
+      const pid = String(productId);
+      const product = state.products.find(p => String(p.id) === pid);
+      if (!product || product.stock <= 0) return;
+
+      const existing = state.cart.find(item => String(item.productId) === pid);
+      if (existing) {
+        if (existing.qty >= product.stock) {
+          showToast('Alcanzaste el stock máximo disponible');
+          return;
+        }
+        existing.qty += 1;
+      } else {
+        state.cart.push({ productId: pid, qty: 1 });
+      }
+      updateCartUI();
+      showToast(`${product.name} añadido al carrito`);
+    }
+
+    function updateCartQty(productId, delta) {
+      const pid = String(productId);
+      const item = state.cart.find(i => String(i.productId) === pid);
+      const product = state.products.find(p => String(p.id) === pid);
+      if (!item || !product) return;
+
+      const nextQty = item.qty + delta;
+      if (nextQty <= 0) {
+        state.cart = state.cart.filter(i => String(i.productId) !== pid);
+      } else if (nextQty <= product.stock) {
+        item.qty = nextQty;
+      } else {
+        showToast('No hay más unidades en stock');
+      }
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cart-badge');
+      const itemsContainer = document.getElementById('cart-items');
+      const empty = document.getElementById('cart-empty');
+      const footer = document.getElementById('cart-footer');
+      if (!badge || !itemsContainer || !empty || !footer) return;
+
+      const totalItems = state.cart.reduce((sum, item) => sum + item.qty, 0);
+      if (totalItems > 0) {
+        badge.textContent = totalItems;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      if (state.cart.length === 0) {
+        itemsContainer.innerHTML = '';
+        itemsContainer.classList.add('hidden');
+        empty.classList.remove('hidden');
+        footer.classList.add('hidden');
+        return;
+      }
+
+      itemsContainer.classList.remove('hidden');
+      empty.classList.add('hidden');
+      footer.classList.remove('hidden');
+
+      let subtotal = 0;
+      itemsContainer.innerHTML = state.cart.map(item => {
+        const p = state.products.find(prod => String(prod.id) === String(item.productId));
+        if (!p) return '';
+        const pid = String(p.id);
+        subtotal += p.price * item.qty;
+        return `
+          <div class="flex gap-3.5 bg-obsidian-850 border border-white/10 rounded-2xl p-3">
+            <img src="${p.image}" onerror="this.src='https://placehold.co/100x100/101318/b4f035?text=ITEM'" class="w-16 h-16 rounded-xl object-cover shrink-0" />
+            <div class="flex-1 min-w-0">
+              <h4 class="text-sm font-bold text-white truncate">${p.name}</h4>
+              <p class="text-xs text-nexo-500 font-bold mt-0.5">${formatPEN(p.price)}</p>
+              <div class="flex items-center gap-2 mt-2">
+                <button onclick="updateCartQty('${pid}', -1)" class="w-6 h-6 rounded-lg bg-obsidian-950 border border-white/10 text-xs font-bold hover:border-nexo-500">-</button>
+                <span class="text-xs font-bold w-5 text-center">${item.qty}</span>
+                <button onclick="updateCartQty('${pid}', 1)" class="w-6 h-6 rounded-lg bg-obsidian-950 border border-white/10 text-xs font-bold hover:border-nexo-500">+</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const shipping = subtotal >= state.settings.freeShippingMin ? 0 : 15;
+      const total = subtotal + shipping;
+      document.getElementById('cart-subtotal').textContent = formatPEN(subtotal);
+      document.getElementById('cart-shipping').textContent = shipping === 0 ? 'Gratis' : formatPEN(shipping);
+      document.getElementById('cart-total').textContent = formatPEN(total);
+    }
+
+    function openCheckoutModal() {
+      if (state.cart.length === 0) return;
+      document.getElementById('checkout-total-display').textContent = document.getElementById('cart-total').textContent;
+      document.getElementById('cart-drawer').classList.add('hidden');
+      document.getElementById('checkout-modal').classList.remove('hidden');
+    }
+
+    async function submitCheckout(event) {
+      event.preventDefault();
+      const customer = document.getElementById('checkout-name').value.trim();
+      const phone = document.getElementById('checkout-phone').value.trim();
+      const address = document.getElementById('checkout-address').value.trim();
+      const payment = document.getElementById('checkout-payment').value;
+
+      let subtotal = 0;
+      const stockUpdates = [];
+      const orderItems = state.cart.map(item => {
+        const p = state.products.find(prod => String(prod.id) === String(item.productId));
+        if (!p) return null;
+        subtotal += p.price * item.qty;
+        const nextStock = Math.max(0, p.stock - item.qty);
+        p.stock = nextStock;
+        stockUpdates.push({ id: String(p.id), stock: nextStock });
+        return { name: p.name, qty: item.qty, price: p.price };
+      }).filter(Boolean);
+
+      const shipping = subtotal >= state.settings.freeShippingMin ? 0 : 15;
+      const orderId = 'ORD-' + String(Date.now()).slice(-6);
+      const newOrder = {
+        id: orderId,
+        createdAt: Date.now(),
+        date: new Date().toLocaleDateString('es-PE', { day: '2-digit', month: 'short', year: 'numeric' }),
+        customer,
+        phone,
+        address,
+        payment,
+        items: orderItems,
+        total: subtotal + shipping,
+        status: 'Pendiente',
+      };
+
+      try {
+        await setDoc(doc(ordersCol(), orderId), newOrder);
+        for (const u of stockUpdates) {
+          await updateDoc(doc(productsCol(), u.id), { stock: u.stock });
+        }
+      } catch (err) {
+        console.warn('Pedido guardado solo en memoria local:', err);
+        state.orders.unshift(newOrder);
+      }
+
+      state.cart = [];
+      updateCartUI();
+      renderProducts();
+      closeModal('checkout-modal');
+      event.target.reset();
+      showToast(`¡Pedido ${newOrder.id} registrado con éxito!`);
+    }
+
+    // Integración WhatsApp
+    function orderViaWhatsAppGeneral() {
+      const text = encodeURIComponent(`Hola ${state.settings.namePrefix} ${state.settings.nameSuffix}, quiero información sobre sus productos.`);
+      window.open(`https://wa.me/${state.settings.whatsapp}?text=${text}`, '_blank');
+    }
+
+    function orderSingleViaWhatsApp(productId) {
+      const p = state.products.find(prod => String(prod.id) === String(productId));
+      if (!p) return;
+      const text = encodeURIComponent(`Hola, me interesa pedir: *${p.name}* (${formatPEN(p.price)}). ¿Tienen stock disponible?`);
+      window.open(`https://wa.me/${state.settings.whatsapp}?text=${text}`, '_blank');
+    }
+
+    function orderCartViaWhatsApp() {
+      if (state.cart.length === 0) return;
+      const lines = state.cart.map(item => {
+        const p = state.products.find(prod => String(prod.id) === String(item.productId));
+        return p ? `• ${item.qty}x ${p.name} (${formatPEN(p.price * item.qty)})` : '';
+      }).filter(Boolean).join('\n');
+      const total = document.getElementById('cart-total').textContent;
+      const text = encodeURIComponent(`Hola ${state.settings.namePrefix} ${state.settings.nameSuffix}, quiero realizar el siguiente pedido:\n\n${lines}\n\nTotal estimado: *${total}*`);
+      window.open(`https://wa.me/${state.settings.whatsapp}?text=${text}`, '_blank');
+    }
+
+    // Club modal
+    function openClubModal() {
+      document.getElementById('club-modal').classList.remove('hidden');
+    }
+
+    async function submitClub(event) {
+      event.preventDefault();
+      const email = document.getElementById('club-email').value.trim().toLowerCase();
+      try {
+        await addDoc(clubCol(), { email, createdAt: Date.now() });
+      } catch (err) {
+        console.warn('No se pudo guardar suscriptor en Firestore:', err);
+      }
+      closeModal('club-modal');
+      event.target.reset();
+      showToast('¡Bienvenido al Club! Código enviado a tu correo.');
+    }
+
+    // =========================================================
+    // PANEL DE ADMINISTRACIÓN (/admin) + FIREBASE GOOGLE AUTH
+    // =========================================================
+
+    async function signInWithFirebaseGoogle() {
+      const btn = document.getElementById('google-firebase-btn');
+      const label = document.getElementById('google-btn-label');
+      document.getElementById('login-error-box').classList.add('hidden');
+
+      if (btn) btn.disabled = true;
+      if (label) label.textContent = 'Conectando con Google...';
+
+      try {
+        const result = await signInWithPopup(auth, googleProvider);
+        const user = result.user;
+        if (!user || !user.email) {
+          showLoginError('No se pudo obtener el correo de tu cuenta de Google.');
+          return;
+        }
+
+        const emailLower = user.email.toLowerCase();
+        const allowed = state.admin.authorizedEmails.map(e => e.toLowerCase());
+        if (!allowed.includes(emailLower)) {
+          await signOut(auth);
+          showLoginError(`Acceso denegado: "${emailLower}" no está autorizado como administrador.`);
+          return;
+        }
+
+        verifyAndLoginGoogleUser({
+          email: emailLower,
+          name: user.displayName || emailLower.split('@')[0],
+          avatar: user.photoURL || `https://placehold.co/80x80/b4f035/07080a?text=${encodeURIComponent(emailLower.slice(0, 2).toUpperCase())}`,
+        });
+      } catch (err) {
+        console.warn('Error en Firebase Google Sign-In:', err.code, err.message);
+        if (err.code === 'auth/unauthorized-domain') {
+          showLoginError('Este dominio aún no está autorizado en Firebase Auth. Agrégalo en Firebase Console o usa el acceso rápido de vista previa abajo.');
+        } else if (err.code === 'auth/operation-not-allowed') {
+          showLoginError('Activa el proveedor "Google" en Firebase Console → Authentication → Sign-in method.');
+        } else if (err.code === 'auth/popup-blocked') {
+          showLoginError('Tu navegador bloqueó la ventana emergente de Google. Permite popups e inténtalo de nuevo.');
+        } else if (err.code !== 'auth/popup-closed-by-user') {
+          showLoginError('No se pudo iniciar sesión con Google (' + (err.code || 'error') + ').');
+        }
+      } finally {
+        if (btn) btn.disabled = false;
+        if (label) label.textContent = 'Continuar con Google';
+      }
+    }
+
+    function verifyAndLoginGoogleUser(profile) {
+      const allowed = state.admin.authorizedEmails.map(e => e.toLowerCase());
+      if (!allowed.includes(profile.email.toLowerCase())) {
+        showLoginError(`Acceso denegado: "${profile.email}" no está autorizado como administrador.`);
+        return;
+      }
+
+      state.admin.authenticated = true;
+      state.admin.email = profile.email;
+      state.admin.name = profile.name;
+      state.admin.avatar = profile.avatar;
+
+      closeAdminLoginModal();
+      showAdminPanel();
+      showToast(`Bienvenido, ${profile.name}`);
+    }
+
+    function showLoginError(msg) {
+      const box = document.getElementById('login-error-box');
+      document.getElementById('login-error-text').textContent = msg;
+      box.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function resetGoogleLoginModal() {
+      document.getElementById('login-error-box').classList.add('hidden');
+      document.getElementById('google-login-step-1').classList.remove('hidden');
+      document.getElementById('google-login-step-2').classList.add('hidden');
+    }
+
+    function closeAdminLoginModal() {
+      closeModal('admin-login-modal');
+      resetGoogleLoginModal();
+    }
+
+    function showGoogleDemoChooser() {
+      document.getElementById('login-error-box').classList.add('hidden');
+      document.getElementById('google-login-step-1').classList.add('hidden');
+      document.getElementById('google-login-step-2').classList.remove('hidden');
+    }
+
+    function selectDemoGoogleAccount(email, name) {
+      const initials = name
+        .split(' ')
+        .map(w => w[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase();
+      verifyAndLoginGoogleUser({
+        email,
+        name,
+        avatar: `https://placehold.co/80x80/b4f035/07080a?text=${encodeURIComponent(initials)}`,
+      });
+    }
+
+    function handleCustomDemoGmail(event) {
+      event.preventDefault();
+      const email = document.getElementById('demo-custom-gmail').value.trim().toLowerCase();
+      if (!email) return;
+      const name = email.split('@')[0];
+      selectDemoGoogleAccount(email, name);
+      event.target.reset();
+    }
+
+    function openAdminLogin() {
+      if (state.admin.authenticated) {
+        showAdminPanel();
+      } else {
+        resetGoogleLoginModal();
+        document.getElementById('admin-login-modal').classList.remove('hidden');
+        lucide.createIcons();
+      }
+    }
+
+    async function logoutAdmin() {
+      state.admin.authenticated = false;
+      try {
+        await signOut(auth);
+      } catch (err) {
+        console.warn('Error al cerrar sesión Firebase:', err);
+      }
+      showStorefront();
+      showToast('Sesión de Google cerrada');
+    }
+
+    function showStorefront() {
+      document.getElementById('admin-view').classList.add('hidden');
+      document.getElementById('storefront-view').classList.remove('hidden');
+      if (window.location.hash === '#admin') {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+      renderCategories();
+      renderProducts();
+      window.scrollTo(0, 0);
+    }
+
+    function showAdminPanel() {
+      document.getElementById('storefront-view').classList.add('hidden');
+      document.getElementById('admin-view').classList.remove('hidden');
+      window.location.hash = 'admin';
+      document.getElementById('admin-email-display').textContent = state.admin.email;
+      document.getElementById('admin-name-display').textContent = state.admin.name;
+      document.getElementById('admin-avatar-display').src = state.admin.avatar;
+      document.getElementById('admin-user-greeting').textContent = state.admin.name;
+      updateAdminDate();
+      applySettingsUI();
+      renderAdminAll();
+      window.scrollTo(0, 0);
+    }
+
+    function switchAdminTab(tabName) {
+      state.admin.currentTab = tabName;
+      const tabs = ['resumen', 'productos', 'categorias', 'pedidos', 'ajustes'];
+      tabs.forEach(t => {
+        const sec = document.getElementById(`admin-tab-${t}`);
+        const btn = document.getElementById(`nav-btn-${t}`);
+        if (sec) sec.classList.toggle('hidden', t !== tabName);
+        if (btn) {
+          btn.className = t === tabName
+            ? 'admin-nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold bg-nexo-500 text-black transition-colors'
+            : 'admin-nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors';
+        }
+      });
+
+      // Cerrar sidebar en móvil al seleccionar
+      const sidebar = document.getElementById('admin-sidebar');
+      const overlay = document.getElementById('admin-mobile-overlay');
+      if (sidebar && !sidebar.classList.contains('-translate-x-full') && window.innerWidth < 1024) {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+      }
+
+      renderAdminAll();
+    }
+
+    function renderAdminAll() {
+      // KPIs
+      const validOrders = state.orders.filter(o => o.status !== 'Cancelado');
+      const confirmedOrders = state.orders.filter(o => o.status === 'Confirmado' || o.status === 'Enviado' || o.status === 'Entregado');
+      const pendingOrders = state.orders.filter(o => o.status === 'Pendiente');
+      const revenue = confirmedOrders.reduce((sum, o) => sum + Number(o.total || 0), 0);
+      const publishedCount = state.products.filter(p => p.published).length;
+      const lowStockProducts = state.products.filter(p => p.stock <= 10);
+
+      document.getElementById('kpi-revenue').textContent = formatPEN(revenue);
+      document.getElementById('kpi-valid-orders').textContent = `${confirmedOrders.length} pedidos confirmados`;
+      document.getElementById('kpi-orders').textContent = validOrders.length;
+      document.getElementById('kpi-pending-orders').textContent = `${pendingOrders.length} pendientes de pago`;
+      document.getElementById('kpi-published').textContent = publishedCount;
+      document.getElementById('kpi-total-products').textContent = `${state.products.length} en el catálogo`;
+      document.getElementById('kpi-low-stock').textContent = lowStockProducts.length;
+
+      // Últimos pedidos (Resumen)
+      const recentOrdersEl = document.getElementById('admin-recent-orders');
+      if (state.orders.length === 0) {
+        recentOrdersEl.innerHTML = `
+          <div class="h-full min-h-[160px] flex flex-col items-center justify-center text-center py-8">
+            <div class="w-11 h-11 rounded-full bg-obsidian-850 border border-white/10 flex items-center justify-center text-gray-500 mb-3">
+              <i data-lucide="inbox" class="w-5 h-5"></i>
+            </div>
+            <div class="text-sm font-bold text-gray-300">Todavía no hay pedidos registrados.</div>
+            <div class="text-xs text-gray-500 mt-1">Aparecerán aquí en cuanto se complete una compra.</div>
+          </div>
+        `;
+      } else {
+        recentOrdersEl.innerHTML = `<div class="space-y-2.5">${state.orders.slice(0, 5).map(o => `
+          <div class="flex items-center justify-between p-3 rounded-xl bg-obsidian-950 border border-white/5">
+            <div>
+              <div class="text-xs font-bold text-white">${o.customer} <span class="text-gray-500 font-normal">· ${o.id}</span></div>
+              <div class="text-[11px] text-gray-500">${o.date} · ${o.payment}</div>
+            </div>
+            <div class="text-right">
+              <div class="text-xs font-extrabold text-nexo-500">${formatPEN(o.total)}</div>
+              <div class="text-[10px] font-bold text-gray-400 uppercase">${o.status}</div>
+            </div>
+          </div>
+        `).join('')}</div>`;
+      }
+
+      // Stock bajo (Resumen)
+      const lowStockEl = document.getElementById('admin-low-stock-list');
+      if (lowStockProducts.length === 0) {
+        lowStockEl.innerHTML = `<div class="text-xs text-gray-500 py-8 text-center">Todo el inventario tiene buen stock.</div>`;
+      } else {
+        lowStockEl.innerHTML = lowStockProducts.map(p => `
+          <div onclick="openProductModal('${String(p.id)}')" class="flex items-center justify-between gap-3 p-3 rounded-xl bg-obsidian-950 border border-white/5 hover:border-amber-500/40 cursor-pointer transition-colors">
+            <div class="flex items-center gap-3 min-w-0">
+              <img src="${p.image}" onerror="this.src='https://placehold.co/80x80/101318/b4f035?text=IMG'" class="w-10 h-10 rounded-lg object-cover shrink-0" />
+              <div class="min-w-0">
+                <div class="text-xs font-bold text-white truncate">${p.name}</div>
+                <div class="text-[11px] text-gray-500">${formatPEN(p.price)}</div>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[10px] font-extrabold shrink-0">${p.stock} UDS</span>
+          </div>
+        `).join('');
+      }
+
+      // Productos recientes (Resumen)
+      document.getElementById('admin-recent-products').innerHTML = state.products.slice(0, 5).map(p => `
+        <div class="flex items-center justify-between gap-4 py-3">
+          <div class="flex items-center gap-3 min-w-0">
+            <img src="${p.image}" onerror="this.src='https://placehold.co/80x80/101318/b4f035?text=IMG'" class="w-10 h-10 rounded-lg object-cover shrink-0" />
+            <div class="min-w-0">
+              <div class="text-sm font-bold text-white truncate">${p.name}</div>
+              <div class="text-xs text-gray-500">${p.category}</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 shrink-0">
+            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${p.published ? 'bg-nexo-500/15 text-nexo-500 border border-nexo-500/30' : 'bg-gray-800 text-gray-400'}">${p.published ? 'PUBLICADO' : 'OCULTO'}</span>
+            <span class="text-sm font-extrabold text-white">${formatPEN(p.price)}</span>
+          </div>
+        </div>
+      `).join('');
+
+      // Tabla completa de Productos
+      document.getElementById('admin-products-table').innerHTML = state.products.map(p => {
+        const pid = String(p.id);
+        return `
+          <tr class="hover:bg-white/[0.02]">
+            <td class="py-3.5 px-5">
+              <div class="flex items-center gap-3">
+                <img src="${p.image}" onerror="this.src='https://placehold.co/80x80/101318/b4f035?text=IMG'" class="w-10 h-10 rounded-lg object-cover shrink-0" />
+                <div>
+                  <div class="font-bold text-white">${p.name}</div>
+                  <div class="text-xs text-gray-500 line-clamp-1 max-w-xs">${p.description}</div>
+                </div>
+              </div>
+            </td>
+            <td class="py-3.5 px-4 text-gray-300 text-xs font-medium">${p.category}</td>
+            <td class="py-3.5 px-4 font-bold text-white">${formatPEN(p.price)}</td>
+            <td class="py-3.5 px-4">
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold ${p.stock <= 10 ? 'bg-amber-500/15 text-amber-400' : 'bg-white/5 text-gray-300'}">${p.stock} uds</span>
+            </td>
+            <td class="py-3.5 px-4">
+              <button onclick="toggleProductStatus('${pid}')" class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${p.published ? 'bg-nexo-500/15 text-nexo-500 border border-nexo-500/30' : 'bg-gray-800 text-gray-400 border border-white/10'}">
+                ${p.published ? 'Publicado' : 'Oculto'}
+              </button>
+            </td>
+            <td class="py-3.5 px-5 text-right">
+              <div class="inline-flex items-center gap-2">
+                <button onclick="openProductModal('${pid}')" class="p-2 rounded-lg bg-obsidian-850 hover:text-nexo-500 text-gray-400 transition-colors" title="Editar">
+                  <i data-lucide="pencil" class="w-4 h-4"></i>
+                </button>
+                <button onclick="deleteProduct('${pid}')" class="p-2 rounded-lg bg-obsidian-850 hover:text-red-400 text-gray-400 transition-colors" title="Eliminar">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Tarjetas de Categorías Admin
+      document.getElementById('admin-categories-grid').innerHTML = state.categoriesMeta.map(cat => {
+        const items = state.products.filter(p => p.category === cat.name);
+        const totalStock = items.reduce((sum, p) => sum + Number(p.stock || 0), 0);
+        const value = items.reduce((sum, p) => sum + Number(p.price || 0) * Number(p.stock || 0), 0);
+        return `
+          <div class="bg-obsidian-900 border border-white/10 rounded-2xl overflow-hidden">
+            <img src="${cat.image}" onerror="this.src='https://placehold.co/600x300/101318/b4f035?text=${encodeURIComponent(cat.name)}'" class="w-full h-36 object-cover" />
+            <div class="p-5 space-y-3">
+              <div>
+                <h3 class="text-lg font-black text-white">${cat.name}</h3>
+                <p class="text-xs text-gray-400 mt-0.5">${cat.desc}</p>
+              </div>
+              <div class="grid grid-cols-2 gap-3 pt-3 border-t border-white/10 text-xs">
+                <div>
+                  <span class="text-gray-500 block">Productos</span>
+                  <span class="font-bold text-white">${items.length} ref. (${totalStock} uds)</span>
+                </div>
+                <div>
+                  <span class="text-gray-500 block">Valor inventario</span>
+                  <span class="font-bold text-nexo-500">${formatPEN(value)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Tabla de Pedidos Admin
+      const ordersTable = document.getElementById('admin-orders-table');
+      if (state.orders.length === 0) {
+        ordersTable.innerHTML = `
+          <tr>
+            <td colspan="5" class="py-12 text-center text-xs text-gray-500">No hay pedidos registrados todavía.</td>
+          </tr>
+        `;
+      } else {
+        ordersTable.innerHTML = state.orders.map(o => `
+          <tr class="hover:bg-white/[0.02]">
+            <td class="py-4 px-5">
+              <div class="font-bold text-white text-xs">${o.id}</div>
+              <div class="text-[11px] text-gray-500">${o.date}</div>
+            </td>
+            <td class="py-4 px-4">
+              <div class="font-bold text-white text-xs">${o.customer}</div>
+              <div class="text-[11px] text-gray-400">${o.phone} · ${o.address}</div>
+            </td>
+            <td class="py-4 px-4 text-xs text-gray-300">
+              ${(o.items || []).map(i => `<div>${i.qty}x ${i.name}</div>`).join('')}
+            </td>
+            <td class="py-4 px-4">
+              <div class="font-extrabold text-nexo-500 text-xs">${formatPEN(o.total)}</div>
+              <div class="text-[10px] text-gray-500">${o.payment}</div>
+            </td>
+            <td class="py-4 px-5">
+              <select
+                onchange="updateOrderStatus('${o.id}', this.value)"
+                class="bg-obsidian-950 border border-white/15 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white focus:outline-none focus:border-nexo-500"
+              >
+                ${['Pendiente', 'Confirmado', 'Enviado', 'Entregado', 'Cancelado'].map(st => `
+                  <option value="${st}" ${o.status === st ? 'selected' : ''}>${st}</option>
+                `).join('')}
+              </select>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      renderAuthorizedAdmins();
+      lucide.createIcons();
+    }
+
+    // Gestión de correos Gmail autorizados en Ajustes (sincronizado con Firestore)
+    function renderAuthorizedAdmins() {
+      const list = document.getElementById('authorized-admins-list');
+      if (!list) return;
+      list.innerHTML = state.admin.authorizedEmails.map(email => {
+        const isCurrent = email.toLowerCase() === state.admin.email.toLowerCase();
+        return `
+          <div class="flex items-center justify-between px-4 py-2.5 rounded-xl bg-obsidian-950 border border-white/10">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-2 h-2 rounded-full bg-nexo-500 shrink-0"></span>
+              <span class="text-xs font-medium text-gray-200 truncate">${email}</span>
+              ${isCurrent ? '<span class="text-[10px] font-bold text-nexo-500 bg-nexo-500/10 px-2 py-0.5 rounded-full">Tú</span>' : ''}
+            </div>
+            ${!isCurrent ? `
+              <button onclick="removeAuthorizedAdmin('${email}')" class="text-gray-500 hover:text-red-400 transition-colors p-1" title="Quitar acceso">
+                <i data-lucide="x" class="w-3.5 h-3.5"></i>
+              </button>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function addAuthorizedAdmin(event) {
+      event.preventDefault();
+      const input = document.getElementById('new-admin-email');
+      const email = input.value.trim().toLowerCase();
+      if (!email) return;
+      if (state.admin.authorizedEmails.includes(email)) {
+        showToast('Ese correo ya está autorizado');
+        return;
+      }
+      state.admin.authorizedEmails.push(email);
+      input.value = '';
+      renderAuthorizedAdmins();
+      lucide.createIcons();
+
+      try {
+        await setDoc(storeConfigDoc(), {
+          ...state.settings,
+          authorizedEmails: state.admin.authorizedEmails,
+        }, { merge: true });
+        showToast(`${email} autorizado y guardado en Firebase`);
+      } catch (err) {
+        console.warn('Error guardando correo autorizado:', err);
+        showToast(`${email} autorizado localmente (revisa reglas Firestore)`);
+      }
+    }
+
+    async function removeAuthorizedAdmin(email) {
+      state.admin.authorizedEmails = state.admin.authorizedEmails.filter(e => e !== email);
+      renderAuthorizedAdmins();
+      lucide.createIcons();
+
+      try {
+        await setDoc(storeConfigDoc(), {
+          ...state.settings,
+          authorizedEmails: state.admin.authorizedEmails,
+        }, { merge: true });
+        showToast('Acceso revocado en Firebase');
+      } catch (err) {
+        console.warn('Error revocando acceso:', err);
+        showToast('Acceso revocado localmente');
+      }
+    }
+
+    async function updateOrderStatus(orderId, newStatus) {
+      const order = state.orders.find(o => o.id === orderId);
+      if (order) {
+        order.status = newStatus;
+        renderAdminAll();
+        try {
+          await updateDoc(doc(ordersCol(), String(orderId)), { status: newStatus });
+          showToast(`Pedido ${orderId} actualizado en tiempo real a ${newStatus}`);
+        } catch (err) {
+          console.warn('Error actualizando pedido en Firestore:', err);
+          showToast(`Pedido ${orderId} actualizado localmente`);
+        }
+      }
+    }
+
+    // CRUD Productos Admin (sincronizado en tiempo real con Firebase)
+    function openProductModal(productId = null) {
+      const modal = document.getElementById('product-modal');
+      const title = document.getElementById('product-modal-title');
+
+      if (productId) {
+        const p = state.products.find(prod => String(prod.id) === String(productId));
+        if (!p) return;
+        title.textContent = 'Editar Producto';
+        document.getElementById('prod-id').value = String(p.id);
+        document.getElementById('prod-name').value = p.name;
+        document.getElementById('prod-category').value = p.category;
+        document.getElementById('prod-badge').value = p.badge || '';
+        document.getElementById('prod-price').value = p.price;
+        document.getElementById('prod-oldprice').value = p.oldPrice || '';
+        document.getElementById('prod-stock').value = p.stock;
+        document.getElementById('prod-desc').value = p.description;
+        document.getElementById('prod-image').value = p.image;
+        document.getElementById('prod-published').checked = p.published;
+      } else {
+        title.textContent = 'Añadir Nuevo Producto';
+        document.getElementById('prod-id').value = '';
+        document.getElementById('prod-name').value = '';
+        document.getElementById('prod-category').value = 'Tecnología';
+        document.getElementById('prod-badge').value = 'NUEVO';
+        document.getElementById('prod-price').value = '';
+        document.getElementById('prod-oldprice').value = '';
+        document.getElementById('prod-stock').value = '15';
+        document.getElementById('prod-desc').value = '';
+        document.getElementById('prod-image').value = '';
+        document.getElementById('prod-published').checked = true;
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    async function saveProduct(event) {
+      event.preventDefault();
+      const idVal = document.getElementById('prod-id').value.trim();
+      const name = document.getElementById('prod-name').value.trim();
+      const category = document.getElementById('prod-category').value;
+      const badge = document.getElementById('prod-badge').value.trim();
+      const price = parseFloat(document.getElementById('prod-price').value);
+      const oldPriceRaw = document.getElementById('prod-oldprice').value;
+      const oldPrice = oldPriceRaw ? parseFloat(oldPriceRaw) : null;
+      const stock = parseInt(document.getElementById('prod-stock').value, 10);
+      const description = document.getElementById('prod-desc').value.trim();
+      const image = document.getElementById('prod-image').value.trim() || `https://placehold.co/600x500/101318/b4f035?text=${encodeURIComponent(name)}`;
+      const published = document.getElementById('prod-published').checked;
+
+      const existing = idVal ? state.products.find(p => String(p.id) === idVal) : null;
+      const docId = existing ? String(existing.id) : 'prod-' + Date.now();
+
+      const productData = {
+        id: docId,
+        name,
+        category,
+        badge,
+        badgeType: badge.toUpperCase() === 'NUEVO' ? 'lime' : (badge.toUpperCase().includes('TOP') || badge.toUpperCase().includes('LIMIT') ? 'orange' : 'dark'),
+        price,
+        oldPrice,
+        rating: existing ? (existing.rating || 5.0) : 5.0,
+        reviews: existing ? (existing.reviews || 1) : 1,
+        stock,
+        description,
+        image,
+        published,
+        createdAt: existing ? (existing.createdAt || Date.now()) : Date.now(),
+      };
+
+      if (existing) {
+        const idx = state.products.findIndex(p => String(p.id) === docId);
+        if (idx > -1) state.products[idx] = productData;
+      } else {
+        state.products.unshift(productData);
+      }
+
+      closeModal('product-modal');
+      renderAdminAll();
+      renderProducts();
+      renderCategories();
+
+      try {
+        await setDoc(doc(productsCol(), docId), productData, { merge: true });
+        showToast(existing ? 'Producto actualizado en tiempo real' : 'Producto publicado en Firebase');
+      } catch (err) {
+        console.warn('Error guardando producto en Firestore:', err);
+        showToast('Guardado localmente (verifica reglas de escritura en Firestore)');
+      }
+    }
+
+    async function toggleProductStatus(productId) {
+      const pid = String(productId);
+      const p = state.products.find(prod => String(prod.id) === pid);
+      if (p) {
+        p.published = !p.published;
+        renderAdminAll();
+        renderProducts();
+        try {
+          await setDoc(doc(productsCol(), pid), { published: p.published }, { merge: true });
+          showToast(p.published ? 'Producto publicado en vivo' : 'Producto ocultado de la tienda');
+        } catch (err) {
+          console.warn('Error cambiando estado en Firestore:', err);
+          showToast(p.published ? 'Publicado localmente' : 'Ocultado localmente');
+        }
+      }
+    }
+
+    async function deleteProduct(productId) {
+      const pid = String(productId);
+      state.products = state.products.filter(p => String(p.id) !== pid);
+      renderAdminAll();
+      renderProducts();
+      renderCategories();
+
+      try {
+        await deleteDoc(doc(productsCol(), pid));
+        showToast('Producto eliminado de Firebase');
+      } catch (err) {
+        console.warn('Error eliminando producto en Firestore:', err);
+        showToast('Eliminado localmente (revisa reglas Firestore)');
+      }
+    }
+
+    async function saveStoreSettings(event) {
+      event.preventDefault();
+      state.settings.namePrefix = document.getElementById('setting-name-prefix').value.trim();
+      state.settings.nameSuffix = document.getElementById('setting-name-suffix').value.trim();
+      state.settings.whatsapp = document.getElementById('setting-whatsapp').value.trim().replace(/\D/g, '');
+      state.settings.freeShippingMin = parseFloat(document.getElementById('setting-free-shipping').value) || 0;
+      applySettingsUI();
+
+      try {
+        await setDoc(storeConfigDoc(), {
+          ...state.settings,
+          authorizedEmails: state.admin.authorizedEmails,
+        }, { merge: true });
+        showToast('Ajustes sincronizados en tiempo real');
+      } catch (err) {
+        console.warn('Error guardando ajustes en Firestore:', err);
+        showToast('Ajustes guardados localmente');
+      }
+    }
+
+    // Exponer funciones al ámbito global para los eventos inline del HTML
+    Object.assign(window, {
+      filterAndScroll,
+      handleSearch,
+      toggleCart,
+      openClubModal,
+      toggleMobileMenu,
+      toggleAdminSidebar,
+      setCategoryFilter,
+      resetFilters,
+      openAdminLogin,
+      orderViaWhatsAppGeneral,
+      switchAdminTab,
+      logoutAdmin,
+      showStorefront,
+      openProductModal,
+      saveStoreSettings,
+      addAuthorizedAdmin,
+      removeAuthorizedAdmin,
+      openCheckoutModal,
+      orderCartViaWhatsApp,
+      closeModal,
+      submitCheckout,
+      closeAdminLoginModal,
+      signInWithFirebaseGoogle,
+      showGoogleDemoChooser,
+      selectDemoGoogleAccount,
+      handleCustomDemoGmail,
+      resetGoogleLoginModal,
+      saveProduct,
+      submitClub,
+      toggleWishlist,
+      orderSingleViaWhatsApp,
+      addToCart,
+      updateCartQty,
+      toggleProductStatus,
+      deleteProduct,
+      updateOrderStatus,
+      seedInitialProductsToCloud,
+    });
+
+    // =========================================================
+    // INICIALIZACIÓN
+    // =========================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      applySettingsUI();
+      renderCategories();
+      renderProducts();
+      updateCartUI();
+      lucide.createIcons();
+      initFirebaseSession();
+
+      if (window.location.hash === '#admin') {
+        openAdminLogin();
+      }
+    });
+  </script>
+</body>
+</html>
