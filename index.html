@@ -2,27 +2,14 @@
 <html lang="es" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JM NEXO STORE | Tech · Figures · Gaming</title>
-
-  <!-- Fuente Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif']
-          },
           colors: {
             neon: '#b4f02e',
             'neon-dark': '#9ad61a',
@@ -35,95 +22,28 @@
       }
     };
   </script>
-
   <style>
-    /* Estilos base y respaldo explícito para garantizar visibilidad de imágenes en celulares */
-    body {
-      background-color: #090b0a;
-      color: #f4f4f5;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      overflow-x: hidden;
-    }
-
-    .marquee-track {
-      display: flex;
-      width: max-content;
-      animation: marquee 26s linear infinite;
-    }
-    .marquee-track:hover {
-      animation-play-state: paused;
-    }
-    @keyframes marquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .glass {
-      background: rgba(17, 19, 18, 0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    /* Dimensiones seguras para contenedores de imagen en móvil y desktop */
-    .media-frame {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      background-color: #171a18;
-    }
-    .media-frame-hero {
-      height: 300px;
-    }
-    .media-frame-about {
-      height: 300px;
-    }
-    .media-frame-cat {
-      height: 256px;
-    }
-    .media-frame-prod {
-      height: 224px;
-    }
-    @media (min-width: 640px) {
-      .media-frame-hero { height: 420px; }
-      .media-frame-about { height: 400px; }
-      .media-frame-cat { height: 288px; }
-    }
-    .media-img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Scrollbar oscuro */
+    body { background-color: #090b0a; color: #f4f4f5; font-family: Inter, system-ui, -apple-system, sans-serif; }
+    .marquee-track { display: flex; width: max-content; animation: marquee 26s linear infinite; }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .glass { background: rgba(17, 19, 18, 0.85); backdrop-filter: blur(12px); }
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: #090b0a; }
     ::-webkit-scrollbar-thumb { background: #272b29; border-radius: 999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #b4f02e; }
+    ::-webkit-scrollbar-thumb:hover { background: #3f4643; }
   </style>
 </head>
 <body class="antialiased selection:bg-neon selection:text-black">
 
   <!-- Toast de notificaciones -->
-  <div id="toast" class="fixed top-5 right-5 z-[110] hidden items-center gap-2.5 rounded-xl border border-zinc-800 bg-zinc-900/95 px-4 py-3 text-sm font-medium text-white shadow-2xl max-w-[90vw]">
-    <span id="toast-dot" class="h-2.5 w-2.5 rounded-full bg-neon shrink-0"></span>
-    <span id="toast-msg" class="leading-snug"></span>
-  </div>
-
-  <!-- Modal personalizado de confirmación (reemplaza confirm()) -->
-  <div id="confirm-modal" class="fixed inset-0 z-[105] hidden items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
-    <div class="w-full max-w-sm rounded-2xl border border-zinc-800 bg-surface p-6 shadow-2xl space-y-4">
-      <h3 id="confirm-title" class="text-base font-black text-white">Confirmar acción</h3>
-      <p id="confirm-text" class="text-xs leading-relaxed text-zinc-400">¿Estás seguro de continuar?</p>
-      <div class="flex justify-end gap-2.5 pt-2">
-        <button id="confirm-cancel-btn" type="button" class="rounded-xl border border-zinc-700 px-4 py-2 text-xs font-bold text-zinc-300 hover:text-white">Cancelar</button>
-        <button id="confirm-ok-btn" type="button" class="rounded-xl bg-red-500 px-4 py-2 text-xs font-black uppercase text-white hover:bg-red-600">Confirmar</button>
-      </div>
-    </div>
+  <div id="toast" class="fixed top-5 right-5 z-[100] hidden items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/95 px-4 py-3 text-sm font-medium text-white shadow-2xl">
+    <span id="toast-dot" class="h-2.5 w-2.5 rounded-full bg-neon"></span>
+    <span id="toast-msg"></span>
   </div>
 
   <!-- =========================================================
-       VISTA 0: VERIFICANDO CREDENCIALES ADMIN
+       VISTA 0: VERIFICANDO SESIÓN ADMIN (EVITA FILTRAR EL PANEL)
   ========================================================== -->
   <div id="admin-loading-view" class="hidden min-h-screen items-center justify-center bg-bgdark p-4">
     <div class="text-center">
@@ -133,7 +53,7 @@
   </div>
 
   <!-- =========================================================
-       VISTA 1: TIENDA PÚBLICA (CLIENTES - PC Y CELULAR)
+       VISTA 1: TIENDA PÚBLICA (CLIENTES)
   ========================================================== -->
   <div id="storefront-view">
     <!-- Barra superior animada -->
@@ -146,7 +66,7 @@
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
         <a href="#top" class="flex items-center gap-3 shrink-0">
           <div class="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-neon text-black shadow-lg shadow-neon/20">
-            <img id="nav-logo-img" src="" alt="Logo" decoding="async" class="hidden h-full w-full object-cover" />
+            <img id="nav-logo-img" src="" alt="Logo" class="hidden h-full w-full object-cover" />
             <svg id="nav-logo-fallback" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 9l10 13L22 9 12 2zm0 3.2L18.4 9 12 17.3 5.6 9 12 5.2z"/></svg>
           </div>
           <div>
@@ -155,7 +75,7 @@
           </div>
         </a>
 
-        <!-- Navegación Desktop -->
+        <!-- Links dinámicos de categorías -->
         <nav id="desktop-nav" class="hidden items-center gap-6 text-sm font-medium text-zinc-300 lg:flex"></nav>
 
         <!-- Buscador, Carrito y Club -->
@@ -165,7 +85,7 @@
             <input id="search-input" type="text" placeholder="Buscar productos..." class="w-48 rounded-full border border-zinc-800 bg-surface-2 py-2 pl-9 pr-4 text-xs text-white placeholder-zinc-500 focus:border-neon focus:outline-none md:w-56" />
           </div>
 
-          <button onclick="openCart()" class="relative flex h-10 w-10 items-center justify-center rounded-full border border-zinc-800 bg-surface-2 text-zinc-200 transition hover:border-neon hover:text-neon" title="Ver carrito" aria-label="Ver carrito">
+          <button onclick="openCart()" class="relative flex h-10 w-10 items-center justify-center rounded-full border border-zinc-800 bg-surface-2 text-zinc-200 transition hover:border-neon hover:text-neon" title="Ver carrito">
             <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
             <span id="cart-badge" class="absolute -right-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-neon px-1 text-[10px] font-black text-black">0</span>
           </button>
@@ -184,7 +104,7 @@
 
     <!-- Hero -->
     <section id="top" class="relative overflow-hidden border-b border-zinc-900 bg-gradient-to-b from-surface via-bgdark to-bgdark">
-      <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:py-20">
+      <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-2 lg:py-20">
         <div>
           <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-surface-2 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-widest text-zinc-300">
             <span class="h-2 w-2 rounded-full bg-neon"></span>
@@ -222,8 +142,8 @@
         </div>
 
         <div class="relative">
-          <div class="media-frame media-frame-hero rounded-3xl border border-zinc-800 shadow-2xl">
-            <img id="hero-image" src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=1000&q=80" alt="Setup Principal" loading="eager" decoding="async" class="media-img" />
+          <div class="relative overflow-hidden rounded-3xl border border-zinc-800 bg-surface-2 shadow-2xl">
+            <img id="hero-image" src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=1200&q=80" alt="Setup Principal" class="h-[340px] w-full object-cover sm:h-[420px]" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent"></div>
             <div class="absolute left-4 top-4 rounded-full border border-zinc-700/80 bg-black/75 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur">
               Envío gratis +<span id="hero-free-shipping">S/ 299</span>
@@ -275,7 +195,7 @@
     </section>
 
     <!-- Categorías dinámicas -->
-    <section id="categorias" class="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+    <section id="categorias" class="mx-auto max-w-7xl px-4 py-16 sm:px-6">
       <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
           <div class="text-xs font-bold uppercase tracking-[0.2em] text-neon">Explora nuestros mundos</div>
@@ -311,8 +231,8 @@
     <!-- Cómo trabajamos -->
     <section class="border-y border-zinc-900 bg-surface/60">
       <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2">
-        <div class="media-frame media-frame-about rounded-3xl border border-zinc-800">
-          <img id="about-image" src="https://images.unsplash.com/photo-1616588589676-62b3bd4ff6d2?auto=format&fit=crop&w=900&q=80" alt="Cómo trabajamos" loading="eager" decoding="async" class="media-img" />
+        <div class="relative overflow-hidden rounded-3xl border border-zinc-800">
+          <img id="about-image" src="https://images.unsplash.com/photo-1616588589676-62b3bd4ff6d2?auto=format&fit=crop&w=1000&q=80" alt="Cómo trabajamos" class="h-[340px] w-full object-cover sm:h-[400px]" />
           <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent"></div>
           <div id="about-location" class="absolute bottom-4 left-4 rounded-full border border-zinc-700 bg-black/75 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-zinc-200 backdrop-blur">
             📍 Envíos a todo el Perú
@@ -365,7 +285,7 @@
       <div id="reviews-grid" class="grid grid-cols-1 gap-5 md:grid-cols-3"></div>
     </section>
 
-    <!-- Footer (SIN botón de Panel Admin — acceso oculto mediante #admin1) -->
+    <!-- Footer -->
     <footer class="border-t border-zinc-900 bg-bgdark">
       <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-10 text-xs text-zinc-500 sm:flex-row sm:px-6">
         <div class="flex items-center gap-2.5">
@@ -376,6 +296,9 @@
           <a href="#resenas" class="transition hover:text-neon">Reseñas</a>
           <button onclick="openClubModal()" class="transition hover:text-neon">Únete al Club</button>
           <button onclick="openWhatsAppGeneral()" class="transition hover:text-neon">WhatsApp</button>
+          <button onclick="openAdminRoute()" class="rounded-lg border border-zinc-800 px-3 py-1.5 font-semibold text-zinc-400 transition hover:border-neon hover:text-neon">
+            🔒 Panel Admin
+          </button>
         </div>
       </div>
     </footer>
@@ -469,7 +392,7 @@
         <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       </div>
       <h2 class="text-2xl font-black text-white">Acceso Restringido</h2>
-      <p class="mt-2 text-xs text-zinc-400">Solo cuentas de Google autorizadas pueden administrar JM NEXO STORE.</p>
+      <p class="mt-2 text-xs text-zinc-400">Este panel está bloqueado. Solo cuentas de Google autorizadas pueden administrar la tienda.</p>
 
       <div id="admin-auth-error" class="mt-4 hidden rounded-xl border border-red-500/40 bg-red-500/10 p-3 text-left text-xs text-red-300"></div>
 
@@ -524,10 +447,10 @@
         </div>
 
         <div class="mt-6 space-y-3">
-          <button onclick="forceSyncFromCloud()" class="flex w-full items-center justify-between rounded-xl border border-zinc-800 bg-bgdark px-3 py-2 text-[11px] text-zinc-300 transition hover:border-neon hover:text-neon">
-            <span class="flex items-center gap-2"><span id="cloud-status-dot" class="h-2 w-2 rounded-full bg-emerald-400"></span><span id="cloud-status-text">Sync PC + Celular</span></span>
-            <span>↻</span>
-          </button>
+          <div class="flex items-center gap-2 rounded-xl border border-zinc-800 bg-bgdark px-3 py-2 text-[11px] text-zinc-400">
+            <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+            <span>Firebase protegido y en vivo</span>
+          </div>
           <div class="rounded-2xl border border-zinc-800 bg-surface-2 p-3.5">
             <div class="flex items-center gap-2.5">
               <img id="admin-user-photo" src="" class="hidden h-8 w-8 rounded-full object-cover border border-zinc-700" />
@@ -554,7 +477,7 @@
             <div>
               <div id="admin-date" class="text-[11px] font-bold uppercase tracking-widest text-zinc-500"></div>
               <h1 class="mt-1 text-3xl font-black text-white">Resumen de la tienda</h1>
-              <p id="admin-welcome-line" class="mt-1 text-sm text-zinc-400">Sincronizado en tiempo real entre laptop y celular.</p>
+              <p id="admin-welcome-line" class="mt-1 text-sm text-zinc-400">Aquí tienes el estado en tiempo real de tu tienda.</p>
             </div>
             <div class="flex flex-wrap gap-2.5">
               <button onclick="openProductModal()" class="rounded-full border border-zinc-700 bg-surface-2 px-5 py-2.5 text-xs font-black uppercase tracking-wider text-white transition hover:border-neon hover:text-neon">
@@ -620,7 +543,7 @@
           <div class="flex flex-wrap items-center justify-between gap-4">
             <div>
               <h1 class="text-2xl font-black text-white">Gestión de productos</h1>
-              <p class="text-xs text-zinc-400">Usa el botón <strong>Subir foto</strong> para guardar las imágenes directo en Firebase y asegurar que se vean en celular y laptop.</p>
+              <p class="text-xs text-zinc-400">Oculta productos sin borrarlos, sube fotos desde tu PC y configura colores disponibles.</p>
             </div>
             <button onclick="openProductModal()" class="rounded-full bg-neon px-5 py-2.5 text-xs font-black uppercase tracking-wider text-black hover:bg-neon-dark">
               + Nuevo producto
@@ -643,7 +566,7 @@
         <section id="tab-categories" class="admin-tab-panel hidden space-y-6">
           <div>
             <h1 class="text-2xl font-black text-white">Categorías de la tienda</h1>
-            <p class="text-xs text-zinc-400">Agrega, edita o elimina categorías. Sube la foto desde tu PC o celular para máxima compatibilidad.</p>
+            <p class="text-xs text-zinc-400">Agrega, edita o elimina categorías. Puedes subir la portada directo desde tu PC.</p>
           </div>
 
           <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -659,12 +582,12 @@
                 <input id="cat-desc" placeholder="Ej. Audífonos, parlantes y micrófonos" class="w-full rounded-xl border border-zinc-800 bg-surface-2 px-3.5 py-2.5 text-sm text-white focus:border-neon focus:outline-none" />
               </div>
               <div>
-                <label class="mb-1 block text-xs font-semibold text-zinc-400">Imagen de categoría (PC / Celular o URL)</label>
+                <label class="mb-1 block text-xs font-semibold text-zinc-400">Imagen de categoría (PC o URL)</label>
                 <div class="flex items-center gap-2">
-                  <input id="cat-image" placeholder="https://... o sube foto" class="flex-1 rounded-xl border border-zinc-800 bg-surface-2 px-3 py-2 text-xs text-white focus:border-neon focus:outline-none" />
+                  <input id="cat-image" placeholder="https://... o sube desde PC" class="flex-1 rounded-xl border border-zinc-800 bg-surface-2 px-3 py-2 text-xs text-white focus:border-neon focus:outline-none" />
                   <label class="cursor-pointer rounded-xl border border-neon/50 bg-neon/10 px-3 py-2 text-xs font-bold text-neon hover:bg-neon hover:text-black shrink-0">
-                    📁 Subir
-                    <input id="cat-image-file" type="file" accept="image/*" class="hidden" onchange="handleLocalUpload(this, 'cat-image', 'cat-image-preview', 480, 65)" />
+                    📁 PC
+                    <input id="cat-image-file" type="file" accept="image/*" class="hidden" onchange="handleLocalUpload(this, 'cat-image', 'cat-image-preview', 480, 0.68)" />
                   </label>
                 </div>
                 <img id="cat-image-preview" src="" class="mt-2 hidden h-24 w-full rounded-xl border border-zinc-800 object-cover" />
@@ -683,7 +606,7 @@
         <section id="tab-reviews" class="admin-tab-panel hidden space-y-6">
           <div>
             <h1 class="text-2xl font-black text-white">Gestión de reseñas</h1>
-            <p class="text-xs text-zinc-400">Agrega, edita u oculta los comentarios de tus clientes.</p>
+            <p class="text-xs text-zinc-400">Agrega, edita u oculta los comentarios de tus clientes que se muestran en la portada.</p>
           </div>
 
           <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -713,12 +636,12 @@
                 <textarea id="rev-text" rows="3" required placeholder="Escribe la reseña del cliente..." class="w-full rounded-xl border border-zinc-800 bg-surface-2 px-3.5 py-2.5 text-xs text-white focus:border-neon focus:outline-none"></textarea>
               </div>
               <div>
-                <label class="mb-1 block text-xs font-semibold text-zinc-400">Avatar del cliente (opcional)</label>
+                <label class="mb-1 block text-xs font-semibold text-zinc-400">Foto / Avatar del cliente (opcional)</label>
                 <div class="flex items-center gap-2">
                   <input id="rev-avatar" placeholder="https://... o sube foto" class="flex-1 rounded-xl border border-zinc-800 bg-surface-2 px-3 py-2 text-xs text-white focus:border-neon focus:outline-none" />
                   <label class="cursor-pointer rounded-xl border border-neon/50 bg-neon/10 px-3 py-2 text-xs font-bold text-neon hover:bg-neon hover:text-black shrink-0">
-                    📁 Subir
-                    <input id="rev-avatar-file" type="file" accept="image/*" class="hidden" onchange="handleLocalUpload(this, 'rev-avatar', 'rev-avatar-preview', 160, 25)" />
+                    📁 PC
+                    <input id="rev-avatar-file" type="file" accept="image/*" class="hidden" onchange="handleLocalUpload(this, 'rev-avatar', 'rev-avatar-preview', 200, 0.7)" />
                   </label>
                 </div>
                 <img id="rev-avatar-preview" src="" class="mt-2 hidden h-12 w-12 rounded-full border border-zinc-700 object-cover" />
@@ -741,7 +664,7 @@
         <section id="tab-orders" class="admin-tab-panel hidden space-y-5">
           <div>
             <h1 class="text-2xl font-black text-white">Pedidos registrados</h1>
-            <p class="text-xs text-zinc-400">Revisa los pedidos enviados desde PC o celular, incluyendo los colores elegidos.</p>
+            <p class="text-xs text-zinc-400">Revisa los pedidos enviados desde la web, incluyendo los colores elegidos.</p>
           </div>
           <div id="admin-orders-list" class="space-y-3"></div>
         </section>
@@ -750,7 +673,7 @@
         <section id="tab-settings" class="admin-tab-panel hidden space-y-6 max-w-4xl">
           <div>
             <h1 class="text-2xl font-black text-white">Ajustes de la tienda y seguridad</h1>
-            <p class="text-xs text-zinc-400">Personaliza tu marca, textos, imágenes (optimizadas para laptop y celular) y administradores autorizados.</p>
+            <p class="text-xs text-zinc-400">Personaliza la identidad, foto de perfil/logo, textos e imágenes del inicio y gestiona los administradores autorizados.</p>
           </div>
 
           <form id="settings-form" class="space-y-6">
@@ -773,12 +696,12 @@
                   <input id="set-admin-name" class="w-full rounded-xl border border-zinc-800 bg-surface-2 px-3.5 py-2.5 text-sm text-white focus:border-neon focus:outline-none" placeholder="Ej. Jimmy Oblitas" />
                 </div>
                 <div>
-                  <label class="mb-1 block text-xs font-semibold text-zinc-400">Logo / Foto de perfil (PC / Celular o URL)</label>
+                  <label class="mb-1 block text-xs font-semibold text-zinc-400">Logo / Foto de perfil (PC o URL)</label>
                   <div class="flex items-center gap-2">
                     <input id="set-store-logo" placeholder="Vacío para usar ícono diamante" class="flex-1 rounded-xl border border-zinc-800 bg-surface-2 px-3 py-2 text-xs text-white focus:border-neon focus:outline-none" />
                     <label class="cursor-pointer rounded-xl border border-neon/50 bg-neon/10 px-3 py-2 text-xs font-bold text-neon hover:bg-neon hover:text-black shrink-0">
-                      📁 Subir
-                      <input id="set-store-logo-file" type="file" accept="image/*" class="hidden" onchange="handleLocalUpload(this, 'set-store-logo', 'set-store-logo-preview', 200, 35)" />
+                      📁 PC
+                      <input id="set-store-logo-file" type="file" accept="image/*" class="hidden" onchange="handleLocalUpload(this, 'set-store-logo', 'set-store-logo-preview', 256, 0.78)" />
                     </label>
                   </div>
                   <img id="set-store-logo-preview" src="" class="mt-2 hidden h-14 w-14 rounded-xl border border-zinc-700 object-cover" />
@@ -786,7 +709,7 @@
               </div>
             </div>
 
-            <!-- 2. Portada Principal (Hero) -->
+            <!-- 2. Textos e Imagen del Panel Principal (Hero) -->
             <div class="rounded-2xl border border-zinc-800 bg-surface p-6 space-y-4">
               <h2 class="text-sm font-black uppercase tracking-wider text-neon">2. Portada Principal (Textos, Estadísticas e Imagen)</h2>
               <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -808,12 +731,12 @@
                 <textarea id="set-hero-subtitle" rows="2" class="w-full rounded-xl border border-zinc-800 bg-surface-2 px-3.5 py-2.5 text-xs text-white focus:border-neon focus:outline-none"></textarea>
               </div>
               <div>
-                <label class="mb-1 block text-xs font-semibold text-zinc-400">Imagen principal del Hero (PC / Celular o URL)</label>
+                <label class="mb-1 block text-xs font-semibold text-zinc-400">Imagen principal del Hero (PC o URL)</label>
                 <div class="flex items-center gap-2">
                   <input id="set-hero-image" class="flex-1 rounded-xl border border-zinc-800 bg-surface-2 px-3 py-2 text-xs text-white focus:border-neon focus:outline-none" />
                   <label class="cursor-pointer rounded-xl border border-neon/50 bg-neon/10 px-3.5 py-2 text-xs font-bold text-neon hover:bg-neon hover:text-black shrink-0">
-                    📁 Subir foto
-                    <input id="set-hero-image-file" type="file" accept="image/*" class="hidden" onchange="handleLocalUpload(this, 'set-hero-image', 'set-hero-image-preview', 720, 110)" />
+                    📁 Subir desde PC
+                    <input id="set-hero-image-file" type="file" accept="image/*" class="hidden" onchange="handleLocalUpload(this, 'set-hero-image', 'set-hero-image-preview', 760, 0.72)" />
                   </label>
                 </div>
                 <img id="set-hero-image-preview" src="" class="mt-2 hidden h-36 w-full rounded-2xl border border-zinc-800 object-cover" />
@@ -847,12 +770,12 @@
                 <textarea id="set-about-desc" rows="2" class="w-full rounded-xl border border-zinc-800 bg-surface-2 px-3.5 py-2.5 text-xs text-white focus:border-neon focus:outline-none"></textarea>
               </div>
               <div>
-                <label class="mb-1 block text-xs font-semibold text-zinc-400">Imagen de sección (PC / Celular o URL)</label>
+                <label class="mb-1 block text-xs font-semibold text-zinc-400">Imagen de sección (PC o URL)</label>
                 <div class="flex items-center gap-2">
                   <input id="set-about-image" class="flex-1 rounded-xl border border-zinc-800 bg-surface-2 px-3 py-2 text-xs text-white focus:border-neon focus:outline-none" />
                   <label class="cursor-pointer rounded-xl border border-neon/50 bg-neon/10 px-3.5 py-2 text-xs font-bold text-neon hover:bg-neon hover:text-black shrink-0">
-                    📁 Subir foto
-                    <input id="set-about-image-file" type="file" accept="image/*" class="hidden" onchange="handleLocalUpload(this, 'set-about-image', 'set-about-image-preview', 680, 110)" />
+                    📁 Subir desde PC
+                    <input id="set-about-image-file" type="file" accept="image/*" class="hidden" onchange="handleLocalUpload(this, 'set-about-image', 'set-about-image-preview', 700, 0.72)" />
                   </label>
                 </div>
                 <img id="set-about-image-preview" src="" class="mt-2 hidden h-32 w-full rounded-2xl border border-zinc-800 object-cover" />
@@ -879,7 +802,7 @@
             </div>
 
             <button type="submit" class="rounded-xl bg-neon px-7 py-3.5 text-xs font-black uppercase tracking-wider text-black shadow-lg shadow-neon/20 hover:bg-neon-dark">
-              Guardar todos los cambios (PC + Celular)
+              Guardar todos los cambios de la web
             </button>
           </form>
 
@@ -887,7 +810,7 @@
           <div class="rounded-2xl border border-zinc-800 bg-surface p-6 space-y-4">
             <div>
               <h2 class="text-sm font-black uppercase tracking-wider text-neon">5. Administradores autorizados (Bloqueo Google)</h2>
-              <p class="mt-1 text-xs text-zinc-400">Solo los correos Gmail de esta lista pueden entrar usando <code class="text-neon">#admin1</code>. Cualquier otra cuenta será bloqueada.</p>
+              <p class="mt-1 text-xs text-zinc-400">Solo los correos Gmail de esta lista pueden entrar al Panel Admin. Cualquier otra cuenta será bloqueada.</p>
             </div>
             <div class="flex flex-wrap gap-2">
               <input id="new-admin-email" type="email" placeholder="nuevo.admin@gmail.com" class="flex-1 min-w-[220px] rounded-xl border border-zinc-800 bg-surface-2 px-3.5 py-2.5 text-sm text-white focus:border-neon focus:outline-none" />
@@ -903,7 +826,7 @@
   </div>
 
   <!-- =========================================================
-       MODAL CREAR / EDITAR PRODUCTO
+       MODAL CREAR / EDITAR PRODUCTO (PC Upload + Ocultar + Colores)
   ========================================================== -->
   <div id="product-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
     <div class="max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-zinc-800 bg-surface p-6 shadow-2xl">
@@ -954,19 +877,16 @@
           <input id="prod-badge" class="w-full rounded-xl border border-zinc-800 bg-surface-2 px-3.5 py-2.5 text-sm text-white focus:border-neon focus:outline-none" placeholder="Ej. NUEVO, TOP VENTAS, -15%" />
         </div>
 
-        <!-- Imagen desde PC / Celular o URL -->
+        <!-- Imagen desde PC o URL -->
         <div class="rounded-2xl border border-zinc-800 bg-surface-2 p-4">
-          <label class="mb-2 block text-xs font-bold uppercase tracking-wider text-neon">Foto del producto (Recomendado: Subir desde tu PC o Celular)</label>
+          <label class="mb-2 block text-xs font-bold uppercase tracking-wider text-neon">Foto del producto (Sube desde tu PC o pega un enlace)</label>
           <div class="flex flex-wrap items-center gap-2">
-            <input id="prod-image" required class="flex-1 min-w-[200px] rounded-xl border border-zinc-700 bg-surface px-3.5 py-2.5 text-xs text-white focus:border-neon focus:outline-none" placeholder="Usa 'Subir foto' para verla siempre en celular" />
+            <input id="prod-image" required class="flex-1 min-w-[200px] rounded-xl border border-zinc-700 bg-surface px-3.5 py-2.5 text-xs text-white focus:border-neon focus:outline-none" placeholder="https://... o selecciona una foto desde tu PC" />
             <label class="cursor-pointer rounded-xl bg-neon px-4 py-2.5 text-xs font-black uppercase text-black hover:bg-neon-dark shrink-0">
-              📁 Subir foto
-              <input id="prod-image-file" type="file" accept="image/*" class="hidden" onchange="handleLocalUpload(this, 'prod-image', 'prod-image-preview', 640, 120)" />
+              📁 Subir foto de PC
+              <input id="prod-image-file" type="file" accept="image/*" class="hidden" onchange="handleLocalUpload(this, 'prod-image', 'prod-image-preview', 750, 0.75)" />
             </label>
           </div>
-          <p class="mt-2 text-[11px] text-zinc-400">
-            Consejo: las fotos subidas con <strong>Subir foto</strong> se guardan directo en Firebase y cargan en el 100% de celulares (los enlaces de Google Photos, Facebook o Instagram suelen bloquearse en teléfono).
-          </p>
           <img id="prod-image-preview" src="" class="mt-3 hidden h-36 w-36 rounded-2xl border border-zinc-700 object-cover" />
         </div>
 
@@ -1008,15 +928,13 @@
   </div>
 
   <!-- =========================================================
-       FIREBASE + MOTOR DUAL (REST HTTPS + LIVE SNAPSHOT)
-       Garantiza carga de fotos en 100% de celulares y laptops
+       FIREBASE & LÓGICA COMPLETA
   ========================================================== -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { initializeFirestore, collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getFirestore, collection, doc, getDoc, setDoc, updateDoc, deleteDoc, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // Configuración exacta de tu proyecto Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyAqwwhdOyHnNLyI4iAn3WAwo5qQiPruo9o",
       authDomain: "jm-nexo-store.firebaseapp.com",
@@ -1026,31 +944,16 @@
       appId: "1:660789791569:web:0b1df6628df36032ee6170"
     };
 
+    // Correo propietario principal (siempre protegido)
     const PRIMARY_OWNER_EMAIL = "jimmyoblitas19@gmail.com";
     const BASE_PATH = ["artifacts", "jm-nexo-store", "public", "data"];
-    const REST_BASE = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents/${BASE_PATH.join("/")}`;
 
-    // Respaldo SVG offline (nunca falla ni se rompe en celular)
-    const SVG_FALLBACK = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
-      `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="480" viewBox="0 0 600 480">
-        <rect width="600" height="480" fill="#171a18"/>
-        <rect x="24" y="24" width="552" height="432" rx="24" fill="none" stroke="#272b29" stroke-width="2"/>
-        <text x="300" y="232" text-anchor="middle" fill="#b4f02e" font-family="Inter,Arial,sans-serif" font-size="24" font-weight="800">JM NEXO STORE</text>
-        <text x="300" y="264" text-anchor="middle" fill="#71717a" font-family="Inter,Arial,sans-serif" font-size="14">Imagen no disponible</text>
-      </svg>`
-    );
-
-    // Inicialización de Firebase con Long-Polling forzado para máxima compatibilidad en datos móviles y Safari
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = initializeFirestore(app, {
-      experimentalForceLongPolling: true,
-      useFetchStreams: false
-    });
+    const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: "select_account" });
 
-    // Colecciones y documentos Firestore (mismas rutas que ya tienes guardadas)
     const productsCol = collection(db, ...BASE_PATH, "products");
     const ordersCol = collection(db, ...BASE_PATH, "orders");
     const subscribersCol = collection(db, ...BASE_PATH, "club_subscribers");
@@ -1067,14 +970,14 @@
       heroTitle: "Tu próximo setup empieza en",
       heroHighlight: "JM NEXO STORE",
       heroSubtitle: "Tecnología de alto rendimiento, figuras de colección y periféricos seleccionados para llevar tu escritorio al siguiente nivel.",
-      heroImage: "https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=1000&q=80",
+      heroImage: "https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=1200&q=80",
       stat1Val: "12K+", stat1Lbl: "Pedidos enviados",
       stat2Val: "4,9/5", stat2Lbl: "Valoración",
       stat3Val: "24-48h", stat3Lbl: "Envío rápido",
       aboutTitle: "Pocas piezas, elegidas con criterio",
       aboutDesc: "Abrimos JM NEXO STORE porque comprar tecnología y figuras se había vuelto un catálogo infinito sin alma. Cada referencia pasa por nuestras manos antes de llegar a tu setup.",
       aboutLocation: "📍 Envíos a todo el Perú",
-      aboutImage: "https://images.unsplash.com/photo-1616588589676-62b3bd4ff6d2?auto=format&fit=crop&w=900&q=80",
+      aboutImage: "https://images.unsplash.com/photo-1616588589676-62b3bd4ff6d2?auto=format&fit=crop&w=1000&q=80",
       whatsapp: "51999999999",
       freeShippingMin: 299,
       marquee: "DEVOLUCIONES EN 30 DÍAS | ENVÍO GRATIS DESDE S/ 299 | NUEVAS FIGURAS CADA SEMANA | 3 MESES DE GARANTÍA",
@@ -1082,9 +985,9 @@
     };
 
     const DEFAULT_CATEGORIES = [
-      { id: "tecnologia", name: "Tecnología", description: "Audio, periféricos y pantallas que rinden al máximo", image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80" },
-      { id: "figuras", name: "Figuras", description: "Coleccionables, ediciones limitadas y estatuas", image: "https://images.unsplash.com/photo-1608889175123-8ee362201f81?auto=format&fit=crop&w=800&q=80" },
-      { id: "gaming", name: "Gaming", description: "Mandos, sillas y accesorios para jugar mejor", image: "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=800&q=80" }
+      { id: "tecnologia", name: "Tecnología", description: "Audio, periféricos y pantallas que rinden al máximo", image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80" },
+      { id: "figuras", name: "Figuras", description: "Coleccionables, ediciones limitadas y estatuas", image: "https://images.unsplash.com/photo-1608889175123-8ee362201f81?auto=format&fit=crop&w=900&q=80" },
+      { id: "gaming", name: "Gaming", description: "Mandos, sillas y accesorios para jugar mejor", image: "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?auto=format&fit=crop&w=900&q=80" }
     ];
 
     const DEFAULT_REVIEWS = [
@@ -1098,47 +1001,38 @@
         id: "prod-aurora-x7", name: "Auriculares Aurora X7", category: "Tecnología",
         price: 429, oldPrice: 529, stock: 18, badge: "-19%", published: true, rating: 4.8,
         description: "Audio espacial 7.1, 60 h de batería y cancelación activa.",
-        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80",
         colors: [{ name: "Negro Mate", hex: "#18181b" }, { name: "Blanco Perla", hex: "#f4f4f5" }, { name: "Azul Noche", hex: "#1d4ed8" }]
       },
       {
         id: "prod-kraken-75", name: "Teclado Kraken 75 HE", category: "Tecnología",
         price: 349, oldPrice: 0, stock: 14, badge: "NUEVO", published: true, rating: 4.9,
         description: "Switches magnéticos, 8K polling y ajuste de actuación.",
-        image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=900&q=80",
         colors: [{ name: "Negro Carbono", hex: "#18181b" }, { name: "Verde Neón", hex: "#b4f02e" }]
       },
       {
         id: "prod-monitor-vortex", name: "Monitor Vortex 27\" QHD", category: "Tecnología",
         price: 1799, oldPrice: 2099, stock: 7, badge: "-14%", published: true, rating: 4.7,
         description: "240 Hz, 1 ms y panel QD-OLED con HDR verdadero.",
-        image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=900&q=80",
         colors: [{ name: "Negro", hex: "#18181b" }]
       },
       {
         id: "prod-phantom-8k", name: "Ratón Phantom 8K", category: "Gaming",
         price: 289, oldPrice: 0, stock: 22, badge: "TOP VENTAS", published: true, rating: 4.9,
         description: "49 g, sensor de 36K DPI y 8K de sondeo inalámbrico.",
-        image: "https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=900&q=80",
         colors: [{ name: "Negro", hex: "#18181b" }, { name: "Blanco", hex: "#f4f4f5" }, { name: "Rojo", hex: "#ef4444" }]
       },
       {
         id: "prod-cyber-ronin", name: "Estatua Cyber Ronin", category: "Figuras",
         price: 259, oldPrice: 0, stock: 6, badge: "EDICIÓN LIMITADA", published: true, rating: 4.9,
         description: "Escala 1/7 pintada a mano con base iluminada LED.",
-        image: "https://images.unsplash.com/photo-1608889175123-8ee362201f81?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1608889175123-8ee362201f81?auto=format&fit=crop&w=900&q=80",
         colors: [{ name: "Edición Clásica", hex: "#18181b" }, { name: "Edición Dorada", hex: "#eab308" }]
       }
     ];
-
-    function loadSavedCart() {
-      try {
-        const parsed = JSON.parse(localStorage.getItem("jm_nexo_cart") || "[]");
-        return Array.isArray(parsed) ? parsed : [];
-      } catch {
-        return [];
-      }
-    }
 
     const state = {
       products: [...DEFAULT_PRODUCTS],
@@ -1149,7 +1043,7 @@
       selectedCategory: "ALL",
       searchQuery: "",
       selectedColors: {},
-      cart: loadSavedCart(),
+      cart: JSON.parse(localStorage.getItem("jm_nexo_cart") || "[]"),
       user: null,
       isAdmin: false,
       authChecked: false,
@@ -1163,98 +1057,6 @@
     const esc = (str = "") => String(str).replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[m]));
     const money = (n) => "S/ " + Number(n || 0).toLocaleString("es-PE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const slugify = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || ("item-" + Date.now());
-
-    // =========================================================
-    // MODAL DE CONFIRMACIÓN PERSONALIZADO (SIN confirm())
-    // =========================================================
-    function askConfirm(title, message) {
-      return new Promise((resolve) => {
-        const modal = document.getElementById("confirm-modal");
-        document.getElementById("confirm-title").textContent = title;
-        document.getElementById("confirm-text").textContent = message;
-        modal.classList.remove("hidden");
-        modal.classList.add("flex");
-
-        const okBtn = document.getElementById("confirm-ok-btn");
-        const cancelBtn = document.getElementById("confirm-cancel-btn");
-
-        const cleanup = (result) => {
-          modal.classList.add("hidden");
-          modal.classList.remove("flex");
-          okBtn.onclick = null;
-          cancelBtn.onclick = null;
-          resolve(result);
-        };
-        okBtn.onclick = () => cleanup(true);
-        cancelBtn.onclick = () => cleanup(false);
-      });
-    }
-
-    // =========================================================
-    // UTILIDADES DE IMÁGENES COMPATIBLES CON MÓVIL Y PC
-    // =========================================================
-    function normalizeImageUrl(raw = "") {
-      const url = String(raw || "").trim();
-      if (!url) return "";
-      if (url.startsWith("data:image/")) return url;
-      // Google Drive: endpoint thumbnail funciona mucho mejor en celulares que uc/lh3
-      const gdMatch = url.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?id=)([a-zA-Z0-9_-]+)/);
-      if (gdMatch) return `https://drive.google.com/thumbnail?id=${gdMatch[1]}&sz=w1000`;
-      if (url.includes("dropbox.com") && url.includes("dl=0")) return url.replace("dl=0", "raw=1");
-      if (url.startsWith("http://")) return "https://" + url.slice(7);
-      return url;
-    }
-
-    function isInvalidLocalPath(url = "") {
-      return /^(file:|blob:|[a-zA-Z]:\\|\\\\|content:|\/storage\/|\/var\/)/i.test(String(url).trim());
-    }
-
-    function isRiskyMobileUrl(url = "") {
-      const u = String(url || "").toLowerCase();
-      if (!u || u.startsWith("data:image/")) return false;
-      return /(fbcdn|scontent|instagram|whatsapp|photos\.google|googleusercontent\.com\/pw|google\.com\/imgres)/i.test(u);
-    }
-
-    function getImageBadgeHtml(url = "") {
-      if (String(url || "").startsWith("data:image/")) {
-        return `<span class="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold text-emerald-300">PC + Celular ✓</span>`;
-      }
-      if (isRiskyMobileUrl(url)) {
-        return `<span class="rounded-full bg-red-500/15 px-2 py-0.5 text-[10px] font-bold text-red-300">⚠ Puede fallar en celular (sube la foto)</span>`;
-      }
-      return `<span class="rounded-full bg-zinc-800 px-2 py-0.5 text-[10px] font-semibold text-zinc-400">Enlace externo</span>`;
-    }
-
-    // Asigna imágenes de forma segura a elementos DOM existentes (sin doble escape y con respaldo offline)
-    function applyImgElement(el, rawUrl, fallbackUrl = SVG_FALLBACK) {
-      if (!el) return;
-      const clean = normalizeImageUrl(rawUrl);
-      const isData = clean.startsWith("data:image/");
-      if (isData) {
-        el.removeAttribute("referrerpolicy");
-      } else {
-        el.setAttribute("referrerpolicy", "no-referrer");
-      }
-      el.onerror = () => {
-        el.onerror = null;
-        el.removeAttribute("referrerpolicy");
-        el.src = fallbackUrl || SVG_FALLBACK;
-      };
-      el.src = clean || fallbackUrl || SVG_FALLBACK;
-    }
-
-    // Genera etiqueta <img> segura para innerHTML (sin referrerpolicy en data URIs y sin lazy que falla en WebViews)
-    function buildImgTag(rawUrl, altText, extraClass = "media-img") {
-      const clean = normalizeImageUrl(rawUrl) || SVG_FALLBACK;
-      const refAttr = clean.startsWith("data:image/") ? "" : `referrerpolicy="no-referrer"`;
-      return `<img src="${esc(clean)}" alt="${esc(altText)}" loading="eager" decoding="async" ${refAttr} onerror="this.onerror=null;this.removeAttribute('referrerpolicy');this.src=window.__NEXO_FALLBACK_IMG;" class="${extraClass}" />`;
-    }
-    window.__NEXO_FALLBACK_IMG = SVG_FALLBACK;
-
-    function checkFirestoreSizeSafe(obj) {
-      const bytes = new Blob([JSON.stringify(obj)]).size;
-      return bytes < 920 * 1024;
-    }
 
     function getAuthorizedEmails() {
       const list = Array.isArray(state.settings.authorizedAdmins) ? state.settings.authorizedAdmins : [];
@@ -1270,84 +1072,59 @@
     function showToast(msg, isError = false) {
       const el = document.getElementById("toast");
       document.getElementById("toast-msg").textContent = msg;
-      document.getElementById("toast-dot").className = "h-2.5 w-2.5 rounded-full shrink-0 " + (isError ? "bg-red-500" : "bg-neon");
+      document.getElementById("toast-dot").className = "h-2.5 w-2.5 rounded-full " + (isError ? "bg-red-500" : "bg-neon");
       el.classList.remove("hidden");
       el.classList.add("flex");
       clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => { el.classList.add("hidden"); el.classList.remove("flex"); }, 3800);
+      window._toastTimer = setTimeout(() => { el.classList.add("hidden"); el.classList.remove("flex"); }, 3400);
     }
 
     // =========================================================
-    // COMPRESIÓN INTELIGENTE A JPEG (100% COMPATIBLE MÓVIL/IOS)
+    // SUBIDA DE IMÁGENES DESDE PC (COMPRESIÓN AUTOMÁTICA)
     // =========================================================
-    function compressImageToBudget(file, maxWidth = 640, maxKB = 120) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onerror = () => reject(new Error("No se pudo leer la imagen."));
-        reader.onload = (ev) => {
-          const img = new Image();
-          img.onerror = () => reject(new Error("Formato no compatible. Usa JPG, PNG o WEBP."));
-          img.onload = () => {
-            let width = img.naturalWidth || img.width;
-            let height = img.naturalHeight || img.height;
-            if (width > maxWidth) {
-              height = Math.round((height * maxWidth) / width);
-              width = maxWidth;
-            }
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-
-            let quality = 0.82;
-            let dataUrl = "";
-            for (let attempt = 0; attempt < 9; attempt++) {
-              canvas.width = Math.max(96, Math.round(width));
-              canvas.height = Math.max(96, Math.round(height));
-              ctx.fillStyle = "#111312";
-              ctx.fillRect(0, 0, canvas.width, canvas.height);
-              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-              dataUrl = canvas.toDataURL("image/jpeg", quality);
-              const sizeKB = Math.round((dataUrl.length * 3) / 4 / 1024);
-              if (sizeKB <= maxKB) break;
-              if (quality > 0.44) {
-                quality -= 0.1;
-              } else {
-                width *= 0.82;
-                height *= 0.82;
-              }
-            }
-            resolve({ dataUrl, sizeKB: Math.round((dataUrl.length * 3) / 4 / 1024) });
-          };
-          img.src = ev.target.result;
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-
-    window.handleLocalUpload = async (fileInput, targetInputId, previewImgId, maxWidth = 640, maxKB = 120) => {
+    window.handleLocalUpload = (fileInput, targetInputId, previewImgId, maxWidth = 720, quality = 0.74) => {
       const file = fileInput.files && fileInput.files[0];
       if (!file) return;
       if (!file.type.startsWith("image/")) {
         showToast("Selecciona un archivo de imagen válido", true);
         return;
       }
-      showToast("Optimizando foto para PC y celular...");
-      try {
-        const { dataUrl, sizeKB } = await compressImageToBudget(file, maxWidth, maxKB);
-        document.getElementById(targetInputId).value = dataUrl;
-        setPreview(previewImgId, dataUrl);
-        showToast(`Foto optimizada (${sizeKB} KB). Pulsa Guardar para publicar.`);
-      } catch (err) {
-        showToast(err.message || "Error al procesar la imagen", true);
-      }
+
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          let w = img.width;
+          let h = img.height;
+          if (w > maxWidth) {
+            h = Math.round((h * maxWidth) / w);
+            w = maxWidth;
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, w, h);
+          const dataUrl = canvas.toDataURL("image/jpeg", quality);
+          document.getElementById(targetInputId).value = dataUrl;
+          const prev = document.getElementById(previewImgId);
+          if (prev) {
+            prev.src = dataUrl;
+            prev.classList.remove("hidden");
+          }
+          showToast("Foto cargada desde tu PC");
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
       fileInput.value = "";
     };
 
     function setPreview(imgId, url) {
       const el = document.getElementById(imgId);
       if (!el) return;
-      const clean = normalizeImageUrl(url);
-      if (clean) {
-        applyImgElement(el, clean, SVG_FALLBACK);
+      if (url) {
+        el.src = url;
         el.classList.remove("hidden");
       } else {
         el.src = "";
@@ -1356,178 +1133,49 @@
     }
 
     // =========================================================
-    // PARSER REST DE FIRESTORE (CARGA GARANTIZADA EN CELULARES)
+    // SUSCRIPCIONES EN TIEMPO REAL (FIRESTORE)
     // =========================================================
-    function parseFirestoreValue(val) {
-      if (!val || typeof val !== "object") return null;
-      if ("stringValue" in val) return val.stringValue;
-      if ("booleanValue" in val) return val.booleanValue;
-      if ("integerValue" in val) return Number(val.integerValue);
-      if ("doubleValue" in val) return Number(val.doubleValue);
-      if ("nullValue" in val) return null;
-      if ("timestampValue" in val) return val.timestampValue;
-      if ("arrayValue" in val) {
-        return Array.isArray(val.arrayValue.values)
-          ? val.arrayValue.values.map(parseFirestoreValue)
-          : [];
-      }
-      if ("mapValue" in val) {
-        return parseFirestoreFields(val.mapValue.fields || {});
-      }
-      return null;
-    }
-
-    function parseFirestoreFields(fields = {}) {
-      const out = {};
-      for (const [k, v] of Object.entries(fields)) {
-        out[k] = parseFirestoreValue(v);
-      }
-      return out;
-    }
-
-    // Carga instantánea por HTTPS estándar (evita bloqueos WebSocket de operadores móviles y Safari)
-    async function loadStoreFromRestAPI(showFeedback = false) {
-      const bust = `_t=${Date.now()}`;
-      try {
-        const [pRes, sRes, cRes, rRes] = await Promise.all([
-          fetch(`${REST_BASE}/products?pageSize=200&${bust}`, { cache: "no-store" }),
-          fetch(`${REST_BASE}/config/settings?${bust}`, { cache: "no-store" }),
-          fetch(`${REST_BASE}/config/categories?${bust}`, { cache: "no-store" }),
-          fetch(`${REST_BASE}/config/reviews?${bust}`, { cache: "no-store" })
-        ]);
-
-        let syncedAny = false;
-
-        if (pRes.ok) {
-          const pJson = await pRes.json();
-          if (Array.isArray(pJson.documents) && pJson.documents.length > 0) {
-            state.firestoreHasProducts = true;
-            state.products = pJson.documents.map(d => {
-              const docId = d.name.split("/").pop();
-              return { id: docId, published: true, colors: [], ...parseFirestoreFields(d.fields) };
-            });
-            syncedAny = true;
-          }
-        }
-
-        if (sRes.ok) {
-          const sJson = await sRes.json();
-          if (sJson.fields) {
-            state.settings = { ...DEFAULT_SETTINGS, ...parseFirestoreFields(sJson.fields) };
-            syncedAny = true;
-          }
-        }
-
-        if (cRes.ok) {
-          const cJson = await cRes.json();
-          if (cJson.fields) {
-            const parsed = parseFirestoreFields(cJson.fields);
-            if (Array.isArray(parsed.list) && parsed.list.length > 0) {
-              state.firestoreHasCategories = true;
-              state.categories = parsed.list;
-              syncedAny = true;
-            }
-          }
-        }
-
-        if (rRes.ok) {
-          const rJson = await rRes.json();
-          if (rJson.fields) {
-            const parsed = parseFirestoreFields(rJson.fields);
-            if (Array.isArray(parsed.list)) {
-              state.firestoreHasReviews = true;
-              state.reviews = parsed.list;
-              syncedAny = true;
-            }
-          }
-        }
-
-        if (syncedAny) {
-          renderAll();
-          updateCloudStatus(true, "Sync PC + Celular OK");
-          if (showFeedback) showToast("Catálogo y fotos actualizados desde Firebase");
-        }
-      } catch (err) {
-        console.warn("REST fallback:", err.message);
-        if (showFeedback) showToast("Revisa tu conexión a internet", true);
-      }
-    }
-
-    function updateCloudStatus(ok, text) {
-      const dot = document.getElementById("cloud-status-dot");
-      const lbl = document.getElementById("cloud-status-text");
-      if (dot) dot.className = "h-2 w-2 rounded-full " + (ok ? "bg-emerald-400" : "bg-amber-400");
-      if (lbl) lbl.textContent = text;
-    }
-
-    // Sincronización manual desde el botón del sidebar
-    window.forceSyncFromCloud = async () => {
-      await loadStoreFromRestAPI(true);
-      try {
-        const [pSnap, cSnap, rSnap, sSnap] = await Promise.all([
-          getDocs(productsCol),
-          getDoc(categoriesDoc),
-          getDoc(reviewsDoc),
-          getDoc(settingsDoc)
-        ]);
-        if (!pSnap.empty) {
-          state.firestoreHasProducts = true;
-          state.products = pSnap.docs.map(d => ({ id: d.id, published: true, colors: [], ...d.data() }));
-        }
-        if (cSnap.exists() && Array.isArray(cSnap.data().list) && cSnap.data().list.length > 0) {
-          state.firestoreHasCategories = true;
-          state.categories = cSnap.data().list;
-        }
-        if (rSnap.exists() && Array.isArray(rSnap.data().list)) {
-          state.firestoreHasReviews = true;
-          state.reviews = rSnap.data().list;
-        }
-        if (sSnap.exists()) {
-          state.settings = { ...DEFAULT_SETTINGS, ...sSnap.data() };
-        }
-        renderAll();
-      } catch {}
-    };
-
-    // Resincroniza automáticamente cuando el celular vuelve a la pestaña de la tienda
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible") loadStoreFromRestAPI(false);
-    });
-
-    // Listeners en tiempo real de Firestore SDK (actualización instantánea sin recargar)
     onSnapshot(productsCol, (snap) => {
       if (!snap.empty) {
         state.firestoreHasProducts = true;
         state.products = snap.docs.map(d => ({ id: d.id, published: true, colors: [], ...d.data() }));
-        updateCloudStatus(true, "Firebase en vivo");
-        renderAll();
+      } else {
+        state.firestoreHasProducts = false;
+        state.products = [...DEFAULT_PRODUCTS];
       }
-    }, (err) => console.warn("Snapshot products:", err.message));
+      renderAll();
+    }, () => renderAll());
 
     onSnapshot(categoriesDoc, (snap) => {
       if (snap.exists() && Array.isArray(snap.data().list) && snap.data().list.length > 0) {
         state.firestoreHasCategories = true;
         state.categories = snap.data().list;
-        renderAll();
+      } else {
+        state.firestoreHasCategories = false;
+        state.categories = [...DEFAULT_CATEGORIES];
       }
-    }, () => {});
+      renderAll();
+    }, () => renderAll());
 
     onSnapshot(reviewsDoc, (snap) => {
       if (snap.exists() && Array.isArray(snap.data().list)) {
         state.firestoreHasReviews = true;
         state.reviews = snap.data().list;
-        renderReviewsStorefront();
-        if (state.isAdmin) renderAdminReviews();
+      } else {
+        state.firestoreHasReviews = false;
+        state.reviews = [...DEFAULT_REVIEWS];
       }
-    }, () => {});
+      renderReviewsStorefront();
+      if (state.isAdmin) renderAdminReviews();
+    }, () => renderReviewsStorefront());
 
     onSnapshot(settingsDoc, (snap) => {
       if (snap.exists()) {
         state.settings = { ...DEFAULT_SETTINGS, ...snap.data() };
-        renderSettingsUI();
-        if (state.isAdmin) renderAuthorizedAdminsList();
       }
-    }, () => {});
+      renderSettingsUI();
+      if (state.isAdmin) renderAuthorizedAdminsList();
+    });
 
     function listenOrdersForAdmin() {
       if (state.ordersUnsub) state.ordersUnsub();
@@ -1575,33 +1223,31 @@
       const s = state.settings;
       document.title = `${s.storeName} | ${s.storeTagline}`;
 
+      // Nombre y logo en navbar, footer y admin sidebar
       document.getElementById("nav-store-name").textContent = s.storeName;
       document.getElementById("nav-store-tagline").textContent = s.storeTagline;
       document.getElementById("footer-store-name").textContent = s.storeName;
       document.getElementById("admin-sidebar-store").textContent = s.storeName;
-      document.getElementById("admin-welcome-line").textContent = `Hola, ${s.adminDisplayName || "Admin"}. Cambios sincronizados en laptop y celular.`;
+      document.getElementById("admin-welcome-line").textContent = `Hola, ${s.adminDisplayName || "Admin"}. Aquí tienes el estado en tiempo real de ${s.storeName}.`;
 
-      const logoUrl = normalizeImageUrl(s.storeLogo);
       const navLogo = document.getElementById("nav-logo-img");
       const navFallback = document.getElementById("nav-logo-fallback");
       const admLogo = document.getElementById("admin-logo-img");
       const admFallback = document.getElementById("admin-logo-fallback");
-      if (logoUrl) {
-        applyImgElement(navLogo, logoUrl, SVG_FALLBACK);
-        navLogo.classList.remove("hidden"); navFallback.classList.add("hidden");
-        applyImgElement(admLogo, logoUrl, SVG_FALLBACK);
-        admLogo.classList.remove("hidden"); admFallback.classList.add("hidden");
+      if (s.storeLogo) {
+        navLogo.src = s.storeLogo; navLogo.classList.remove("hidden"); navFallback.classList.add("hidden");
+        admLogo.src = s.storeLogo; admLogo.classList.remove("hidden"); admFallback.classList.add("hidden");
       } else {
         navLogo.classList.add("hidden"); navFallback.classList.remove("hidden");
         admLogo.classList.add("hidden"); admFallback.classList.remove("hidden");
       }
 
+      // Hero y textos
       document.getElementById("hero-badge").textContent = s.heroBadge;
       document.getElementById("hero-title").textContent = s.heroTitle;
       document.getElementById("hero-highlight").textContent = " " + s.heroHighlight;
       document.getElementById("hero-subtitle").textContent = s.heroSubtitle;
-      applyImgElement(document.getElementById("hero-image"), s.heroImage || DEFAULT_SETTINGS.heroImage, DEFAULT_SETTINGS.heroImage);
-
+      document.getElementById("hero-image").src = s.heroImage || DEFAULT_SETTINGS.heroImage;
       document.getElementById("stat-1-val").textContent = s.stat1Val;
       document.getElementById("stat-1-lbl").textContent = s.stat1Lbl;
       document.getElementById("stat-2-val").textContent = s.stat2Val;
@@ -1609,17 +1255,20 @@
       document.getElementById("stat-3-val").textContent = s.stat3Val;
       document.getElementById("stat-3-lbl").textContent = s.stat3Lbl;
 
+      // Cómo trabajamos
       document.getElementById("about-title").textContent = s.aboutTitle;
       document.getElementById("about-desc").textContent = s.aboutDesc;
       document.getElementById("about-location").textContent = s.aboutLocation;
-      applyImgElement(document.getElementById("about-image"), s.aboutImage || DEFAULT_SETTINGS.aboutImage, DEFAULT_SETTINGS.aboutImage);
+      document.getElementById("about-image").src = s.aboutImage || DEFAULT_SETTINGS.aboutImage;
 
+      // Marquee y envío gratis
       const items = (s.marquee || "").split("|").map(x => x.trim()).filter(Boolean);
       document.getElementById("marquee-content").innerHTML = [...items, ...items, ...items].map(t => `<span class="inline-flex items-center gap-2">⚡ ${esc(t)}</span>`).join("");
       const minTxt = `S/ ${s.freeShippingMin || 299}`;
       document.getElementById("hero-free-shipping").textContent = minTxt;
       document.querySelectorAll(".benefit-free-shipping").forEach(el => el.textContent = minTxt);
 
+      // Rellenar formulario de ajustes si el usuario no está escribiendo en ese campo
       const fieldMap = {
         "set-store-name": s.storeName,
         "set-store-tagline": s.storeTagline,
@@ -1670,9 +1319,10 @@
       const visibleProducts = state.products.filter(p => p.published !== false);
       document.getElementById("categories-grid").innerHTML = state.categories.map(c => {
         const count = visibleProducts.filter(p => (p.category || "").toLowerCase() === c.name.toLowerCase()).length;
+        const img = c.image || "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=80";
         return `
-          <div onclick="selectCategory('${esc(c.name)}')" class="media-frame media-frame-cat group cursor-pointer rounded-3xl border border-zinc-800 transition hover:border-neon/60">
-            ${buildImgTag(c.image, c.name, "media-img transition duration-500 group-hover:scale-105")}
+          <div onclick="selectCategory('${esc(c.name)}')" class="group relative h-72 cursor-pointer overflow-hidden rounded-3xl border border-zinc-800 bg-surface-2 transition hover:border-neon/60">
+            <img src="${esc(img)}" alt="${esc(c.name)}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
             <div class="absolute bottom-5 left-5 right-5">
               <div class="text-[11px] font-extrabold uppercase tracking-widest text-neon">${count} ${count === 1 ? 'PRODUCTO' : 'PRODUCTOS'}</div>
@@ -1726,8 +1376,8 @@
 
         return `
           <article class="group flex flex-col overflow-hidden rounded-3xl border border-zinc-800/90 bg-surface transition hover:border-zinc-700">
-            <div class="media-frame media-frame-prod">
-              ${buildImgTag(p.image, p.name, "media-img transition duration-500 group-hover:scale-105")}
+            <div class="relative h-56 overflow-hidden bg-surface-2">
+              <img src="${esc(p.image)}" alt="${esc(p.name)}" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
               ${p.badge ? `<span class="absolute left-3 top-3 rounded-full bg-neon px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-black">${esc(p.badge)}</span>` : ""}
               ${outOfStock ? `<span class="absolute right-3 top-3 rounded-full bg-red-500/90 px-2.5 py-1 text-[10px] font-black uppercase text-white">Agotado</span>` : ""}
             </div>
@@ -1768,7 +1418,6 @@
       grid.innerHTML = visible.map(r => {
         const stars = "★".repeat(Number(r.rating || 5)) + "☆".repeat(5 - Number(r.rating || 5));
         const initials = (r.author || "C").slice(0, 2).toUpperCase();
-        const av = normalizeImageUrl(r.avatar);
         return `
           <div class="flex flex-col justify-between rounded-3xl border border-zinc-800 bg-surface p-6">
             <div>
@@ -1776,8 +1425,8 @@
               <p class="mt-3 text-sm leading-relaxed text-zinc-300">"${esc(r.text)}"</p>
             </div>
             <div class="mt-5 flex items-center gap-3 border-t border-zinc-800/80 pt-4">
-              ${av
-                ? buildImgTag(av, r.author, "h-10 w-10 rounded-full object-cover border border-zinc-700")
+              ${r.avatar
+                ? `<img src="${esc(r.avatar)}" class="h-10 w-10 rounded-full object-cover border border-zinc-700" />`
                 : `<div class="flex h-10 w-10 items-center justify-center rounded-full bg-surface-3 text-xs font-black text-neon">${esc(initials)}</div>`}
               <div>
                 <div class="text-sm font-bold text-white">${esc(r.author)}</div>
@@ -1823,11 +1472,7 @@
     // CARRITO Y WHATSAPP
     // =========================================================
     function saveCart() {
-      try {
-        // Evitar llenar localStorage con base64 gigantes: guardamos solo referencia ligera
-        const light = state.cart.map(i => ({ ...i, image: i.image && i.image.length < 400 ? i.image : "" }));
-        localStorage.setItem("jm_nexo_cart", JSON.stringify(light));
-      } catch {}
+      localStorage.setItem("jm_nexo_cart", JSON.stringify(state.cart));
       renderCartUI();
     }
 
@@ -1839,7 +1484,7 @@
       const cartKey = `${p.id}__${colorName}`;
       const existing = state.cart.find(i => i.cartKey === cartKey);
       if (existing) existing.qty += 1;
-      else state.cart.push({ cartKey, id: p.id, name: p.name, price: Number(p.price), image: p.image || "", color: colorName, colorHex: colorObj ? colorObj.hex : "", qty: 1 });
+      else state.cart.push({ cartKey, id: p.id, name: p.name, price: Number(p.price), image: p.image, color: colorName, colorHex: colorObj ? colorObj.hex : "", qty: 1 });
       saveCart();
       showToast(`Añadido: ${p.name}${colorName ? ` (${colorName})` : ""}`);
     };
@@ -1867,25 +1512,21 @@
         box.innerHTML = `<div class="py-12 text-center text-sm text-zinc-500">Tu carrito está vacío.</div>`;
         return;
       }
-      box.innerHTML = state.cart.map(i => {
-        const liveProd = state.products.find(p => p.id === i.id);
-        const imgSrc = (liveProd && liveProd.image) || i.image || SVG_FALLBACK;
-        return `
-          <div class="flex items-center gap-3 rounded-2xl border border-zinc-800 bg-surface-2 p-3">
-            ${buildImgTag(imgSrc, i.name, "h-16 w-16 rounded-xl object-cover shrink-0")}
-            <div class="min-w-0 flex-1">
-              <div class="truncate text-sm font-bold text-white">${esc(i.name)}</div>
-              ${i.color ? `<div class="mt-0.5 flex items-center gap-1.5 text-[11px] text-zinc-400"><span class="h-2.5 w-2.5 rounded-full border border-zinc-600" style="background:${esc(i.colorHex)}"></span>${esc(i.color)}</div>` : ""}
-              <div class="mt-1 text-xs font-black text-neon">${money(i.price * i.qty)}</div>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <button onclick="updateCartQty('${esc(i.cartKey)}', -1)" class="h-7 w-7 rounded-lg border border-zinc-700 text-xs font-bold text-white">-</button>
-              <span class="w-5 text-center text-xs font-bold">${i.qty}</span>
-              <button onclick="updateCartQty('${esc(i.cartKey)}', 1)" class="h-7 w-7 rounded-lg border border-zinc-700 text-xs font-bold text-white">+</button>
-            </div>
+      box.innerHTML = state.cart.map(i => `
+        <div class="flex items-center gap-3 rounded-2xl border border-zinc-800 bg-surface-2 p-3">
+          <img src="${esc(i.image)}" class="h-16 w-16 rounded-xl object-cover" />
+          <div class="min-w-0 flex-1">
+            <div class="truncate text-sm font-bold text-white">${esc(i.name)}</div>
+            ${i.color ? `<div class="mt-0.5 flex items-center gap-1.5 text-[11px] text-zinc-400"><span class="h-2.5 w-2.5 rounded-full border border-zinc-600" style="background:${esc(i.colorHex)}"></span>${esc(i.color)}</div>` : ""}
+            <div class="mt-1 text-xs font-black text-neon">${money(i.price * i.qty)}</div>
           </div>
-        `;
-      }).join("");
+          <div class="flex items-center gap-1.5">
+            <button onclick="updateCartQty('${esc(i.cartKey)}', -1)" class="h-7 w-7 rounded-lg border border-zinc-700 text-xs font-bold text-white">-</button>
+            <span class="w-5 text-center text-xs font-bold">${i.qty}</span>
+            <button onclick="updateCartQty('${esc(i.cartKey)}', 1)" class="h-7 w-7 rounded-lg border border-zinc-700 text-xs font-bold text-white">+</button>
+          </div>
+        </div>
+      `).join("");
     }
 
     window.openCart = () => document.getElementById("cart-drawer").classList.remove("hidden");
@@ -1929,10 +1570,9 @@
       const phone = document.getElementById("co-phone").value.trim();
       const address = document.getElementById("co-address").value.trim();
       const total = state.cart.reduce((s, i) => s + i.price * i.qty, 0);
-      const lightItems = state.cart.map(({ id, name, price, color, qty }) => ({ id, name, price, color, qty }));
 
       try {
-        await addDoc(ordersCol, { customerName, phone, address, items: lightItems, total, status: "Pendiente", createdAt: Date.now() });
+        await addDoc(ordersCol, { customerName, phone, address, items: state.cart, total, status: "Pendiente", createdAt: Date.now() });
       } catch (err) {
         console.warn("Pedido:", err.message);
       }
@@ -1960,15 +1600,8 @@
     });
 
     // =========================================================
-    // RUTA OCULTA (#admin1 / ?admin1 / /admin1) + BLOQUEO GOOGLE
+    // BLOQUEO ESTRICTO DE ADMIN + GOOGLE AUTH
     // =========================================================
-    function isAdminRoute() {
-      const hash = window.location.hash.toLowerCase();
-      const search = window.location.search.toLowerCase();
-      const path = window.location.pathname.toLowerCase();
-      return hash === "#admin1" || search === "?admin1" || path.endsWith("/admin1") || path.endsWith("/admin1/");
-    }
-
     function showView(viewId) {
       ["storefront-view", "admin-loading-view", "admin-login-view", "admin-view"].forEach(id => {
         const el = document.getElementById(id);
@@ -1981,13 +1614,17 @@
     }
 
     window.showStorefront = () => {
-      const cleanPath = window.location.pathname.replace(/\/admin1\/?$/i, "/");
-      history.replaceState(null, "", cleanPath);
+      history.replaceState(null, "", window.location.pathname);
       showView("storefront-view");
     };
 
+    window.openAdminRoute = () => {
+      window.location.hash = "admin";
+      handleRoute();
+    };
+
     function handleRoute() {
-      if (isAdminRoute()) {
+      if (window.location.hash === "#admin") {
         if (!state.authChecked) {
           showView("admin-loading-view");
           return;
@@ -2009,6 +1646,7 @@
       const errBox = document.getElementById("admin-auth-error");
       errBox.classList.add("hidden");
       try {
+        // Cargar lista actualizada de administradores antes de validar
         try {
           const snap = await getDoc(settingsDoc);
           if (snap.exists()) state.settings = { ...DEFAULT_SETTINGS, ...snap.data() };
@@ -2041,35 +1679,27 @@
     };
 
     onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        state.user = null;
-        state.isAdmin = false;
-        state.authChecked = true;
-        handleRoute();
-        return;
-      }
-
+      // Aseguramos leer los admins autorizados desde Firestore antes de otorgar acceso
       try {
         const snap = await getDoc(settingsDoc);
         if (snap.exists()) state.settings = { ...DEFAULT_SETTINGS, ...snap.data() };
       } catch {}
 
-      if (isEmailAuthorized(user.email)) {
+      if (user && isEmailAuthorized(user.email)) {
         state.user = user;
         state.isAdmin = true;
         document.getElementById("admin-user-email").textContent = user.email;
         document.getElementById("admin-user-name").textContent = state.settings.adminDisplayName || user.displayName || "Administrador";
         const photo = document.getElementById("admin-user-photo");
-        if (user.photoURL) {
-          applyImgElement(photo, user.photoURL, SVG_FALLBACK);
-          photo.classList.remove("hidden");
-        }
+        if (user.photoURL) { photo.src = user.photoURL; photo.classList.remove("hidden"); }
         document.getElementById("admin-date").textContent = new Date().toLocaleDateString("es-PE", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
         await seedInitialDataIfEmpty();
         listenOrdersForAdmin();
         renderAll();
       } else {
-        await signOut(auth);
+        if (user) {
+          await signOut(auth);
+        }
         state.user = null;
         state.isAdmin = false;
       }
@@ -2092,7 +1722,7 @@
 
     function renderAdminDashboard() {
       const validOrders = state.orders.filter(o => o.status !== "Cancelado");
-      const confirmedRevenue = state.orders.filter(o => o.status === "Confirmado" || o.status === "Enviado" || o.status === "Entregado").reduce((s, o) => s + Number(o.total || 0), 0);
+      const confirmedRevenue = state.orders.filter(o => o.status === "Confirmado" || o.status === "Enviado").reduce((s, o) => s + Number(o.total || 0), 0);
       const pendingOrders = state.orders.filter(o => o.status === "Pendiente").length;
       const publishedCount = state.products.filter(p => p.published !== false).length;
       const lowStock = state.products.filter(p => Number(p.stock || 0) <= 10);
@@ -2117,7 +1747,7 @@
         ? lowStock.slice(0, 5).map(p => `
             <div class="flex items-center justify-between gap-3">
               <div class="flex items-center gap-3 min-w-0">
-                ${buildImgTag(p.image, p.name, "h-10 w-10 rounded-lg object-cover shrink-0")}
+                <img src="${esc(p.image)}" class="h-10 w-10 rounded-lg object-cover" />
                 <div class="min-w-0"><div class="truncate text-xs font-bold text-white">${esc(p.name)}</div><div class="text-[11px] text-zinc-400">${money(p.price)}</div></div>
               </div>
               <span class="shrink-0 rounded-full border border-amber-500/40 bg-amber-500/10 px-2.5 py-1 text-[10px] font-black text-amber-300">${p.stock} UDS</span>
@@ -2129,7 +1759,7 @@
         return `
           <div class="flex items-center justify-between gap-3 py-3">
             <div class="flex items-center gap-3 min-w-0">
-              ${buildImgTag(p.image, p.name, `h-10 w-10 rounded-lg object-cover shrink-0 ${isPub ? '' : 'opacity-40 grayscale'}`)}
+              <img src="${esc(p.image)}" class="h-10 w-10 rounded-lg object-cover ${isPub ? '' : 'opacity-40 grayscale'}" />
               <div class="min-w-0"><div class="truncate text-sm font-bold text-white">${esc(p.name)}</div><div class="text-xs text-zinc-500">${esc(p.category)}</div></div>
             </div>
             <div class="flex items-center gap-3">
@@ -2141,7 +1771,7 @@
     }
 
     // =========================================================
-    // PRODUCTOS ADMIN + OCULTAR + COLORES + DIAGNÓSTICO MÓVIL
+    // PRODUCTOS ADMIN + OCULTAR + COLORES
     // =========================================================
     ["admin-prod-search", "admin-prod-visibility"].forEach(id => {
       document.getElementById(id).addEventListener("input", renderAdminProducts);
@@ -2170,12 +1800,11 @@
         return `
           <div class="flex flex-col justify-between gap-4 rounded-2xl border border-zinc-800 bg-surface p-4 sm:flex-row sm:items-center ${isPub ? '' : 'opacity-75'}">
             <div class="flex items-center gap-3.5 min-w-0">
-              ${buildImgTag(p.image, p.name, `h-14 w-14 rounded-xl object-cover shrink-0 ${isPub ? '' : 'grayscale'}`)}
+              <img src="${esc(p.image)}" class="h-14 w-14 rounded-xl object-cover ${isPub ? '' : 'grayscale'}" />
               <div class="min-w-0">
                 <div class="flex flex-wrap items-center gap-2">
                   <span class="truncate text-sm font-extrabold text-white">${esc(p.name)}</span>
                   <span class="rounded-full px-2 py-0.5 text-[10px] font-black uppercase ${isPub ? 'bg-neon/15 text-neon' : 'bg-amber-500/15 text-amber-300'}">${isPub ? 'Publicado' : 'Oculto'}</span>
-                  ${getImageBadgeHtml(p.image)}
                 </div>
                 <div class="mt-0.5 text-xs text-zinc-400">${esc(p.category)} · Stock: <strong class="text-white">${p.stock}</strong> · <strong class="text-neon">${money(p.price)}</strong></div>
                 ${colors.length ? `<div class="mt-1.5 flex items-center gap-1.5"><span class="text-[10px] text-zinc-500">Colores:</span>${colors.map(c => `<span title="${esc(c.name)}" class="h-3.5 w-3.5 rounded-full border border-zinc-600" style="background:${esc(c.hex)}"></span>`).join("")}</div>` : ""}
@@ -2196,15 +1825,14 @@
       const nextPub = p.published === false;
       try {
         await setDoc(doc(productsCol, id), { ...p, published: nextPub });
-        showToast(nextPub ? "Producto publicado en PC y celular" : "Producto ocultado");
+        showToast(nextPub ? "Producto publicado" : "Producto ocultado");
       } catch (err) {
         showToast("Error: " + err.message, true);
       }
     };
 
     window.deleteProduct = async (id) => {
-      const ok = await askConfirm("Eliminar producto", "¿Eliminar este producto permanentemente? (Si solo quieres quitarlo temporalmente, usa Ocultar).");
-      if (!ok) return;
+      if (!confirm("¿Eliminar este producto permanentemente?")) return;
       try {
         await deleteDoc(doc(productsCol, id));
         showToast("Producto eliminado");
@@ -2274,10 +1902,6 @@
 
     document.getElementById("product-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const rawImg = document.getElementById("prod-image").value.trim();
-      if (isInvalidLocalPath(rawImg)) {
-        return showToast("No pegues rutas locales de PC. Usa el botón Subir foto.", true);
-      }
       const existingId = document.getElementById("prod-id").value;
       const id = existingId || ("prod-" + Date.now());
       const payload = {
@@ -2289,19 +1913,16 @@
         oldPrice: Number(document.getElementById("prod-old-price").value || 0),
         stock: Number(document.getElementById("prod-stock").value || 0),
         badge: document.getElementById("prod-badge").value.trim(),
-        image: normalizeImageUrl(rawImg),
+        image: document.getElementById("prod-image").value.trim(),
         description: document.getElementById("prod-desc").value.trim(),
         colors: state.modalColors,
         rating: 4.9,
         updatedAt: Date.now()
       };
-      if (!checkFirestoreSizeSafe(payload)) {
-        return showToast("La imagen es demasiado pesada. Súbela nuevamente con el botón Subir foto.", true);
-      }
       try {
         await setDoc(doc(productsCol, id), payload);
         closeProductModal();
-        showToast(existingId ? "Producto actualizado en PC y celular" : "Producto creado en PC y celular");
+        showToast(existingId ? "Producto actualizado" : "Producto creado");
       } catch (err) {
         showToast("Error al guardar: " + err.message, true);
       }
@@ -2316,13 +1937,9 @@
         return `
           <div class="flex flex-col justify-between gap-4 rounded-2xl border border-zinc-800 bg-surface p-4 sm:flex-row sm:items-center">
             <div class="flex items-center gap-3.5 min-w-0">
-              ${buildImgTag(c.image, c.name, "h-14 w-14 rounded-xl object-cover shrink-0")}
+              <img src="${esc(c.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=400&q=80')}" class="h-14 w-14 rounded-xl object-cover" />
               <div class="min-w-0">
-                <div class="flex flex-wrap items-center gap-2">
-                  <span class="text-sm font-extrabold text-white">${esc(c.name)}</span>
-                  <span class="text-xs font-normal text-neon">(${count} productos)</span>
-                  ${getImageBadgeHtml(c.image)}
-                </div>
+                <div class="text-sm font-extrabold text-white">${esc(c.name)} <span class="ml-1 text-xs font-normal text-neon">(${count} productos)</span></div>
                 <div class="truncate text-xs text-zinc-400">${esc(c.description || "Sin descripción")}</div>
               </div>
             </div>
@@ -2356,8 +1973,7 @@
 
     window.deleteCategory = async (id) => {
       if (state.categories.length <= 1) return showToast("Debe quedar al menos una categoría", true);
-      const ok = await askConfirm("Eliminar categoría", "¿Seguro que deseas eliminar esta categoría?");
-      if (!ok) return;
+      if (!confirm("¿Eliminar esta categoría?")) return;
       try {
         await setDoc(categoriesDoc, { list: state.categories.filter(c => c.id !== id) });
         showToast("Categoría eliminada");
@@ -2368,22 +1984,17 @@
 
     document.getElementById("category-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const rawImg = document.getElementById("cat-image").value.trim();
-      if (isInvalidLocalPath(rawImg)) return showToast("Usa el botón Subir para cargar la imagen.", true);
       const editId = document.getElementById("cat-edit-id").value;
       const name = document.getElementById("cat-name").value.trim();
       const description = document.getElementById("cat-desc").value.trim();
-      const image = normalizeImageUrl(rawImg) || SVG_FALLBACK;
+      const image = document.getElementById("cat-image").value.trim() || "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=80";
       const updated = editId
         ? state.categories.map(c => c.id === editId ? { ...c, name, description, image } : c)
         : [...state.categories, { id: slugify(name), name, description, image }];
-      if (!checkFirestoreSizeSafe({ list: updated })) {
-        return showToast("Demasiadas fotos pesadas en categorías. Vuelve a subirlas usando el botón Subir.", true);
-      }
       try {
         await setDoc(categoriesDoc, { list: updated });
         resetCategoryForm();
-        showToast(editId ? "Categoría actualizada en PC y celular" : "Categoría creada");
+        showToast(editId ? "Categoría actualizada" : "Categoría creada");
       } catch (err) {
         showToast("Error: " + err.message, true);
       }
@@ -2444,8 +2055,7 @@
     };
 
     window.deleteReview = async (id) => {
-      const ok = await askConfirm("Eliminar reseña", "¿Deseas eliminar esta reseña de tu tienda?");
-      if (!ok) return;
+      if (!confirm("¿Eliminar esta reseña?")) return;
       try {
         await setDoc(reviewsDoc, { list: state.reviews.filter(r => r.id !== id) });
         showToast("Reseña eliminada");
@@ -2463,7 +2073,7 @@
         product: document.getElementById("rev-product").value.trim(),
         rating: Number(document.getElementById("rev-rating").value || 5),
         text: document.getElementById("rev-text").value.trim(),
-        avatar: normalizeImageUrl(document.getElementById("rev-avatar").value.trim()),
+        avatar: document.getElementById("rev-avatar").value.trim(),
         visible: document.getElementById("rev-visible").checked
       };
       const updated = editId
@@ -2496,7 +2106,7 @@
             </div>
             <div class="flex items-center gap-2">
               <select onchange="updateOrderStatus('${esc(o.id)}', this.value)" class="rounded-xl border border-zinc-700 bg-surface-2 px-3 py-1.5 text-xs font-bold text-white">
-                ${["Pendiente", "Confirmado", "Enviado", "Entregado", "Cancelado"].map(st => `<option value="${st}" ${o.status === st ? "selected" : ""}>${st}</option>`).join("")}
+                ${["Pendiente", "Confirmado", "Enviado", "Cancelado"].map(st => `<option value="${st}" ${o.status === st ? "selected" : ""}>${st}</option>`).join("")}
               </select>
               <span class="text-base font-black text-neon">${money(o.total)}</span>
             </div>
@@ -2549,8 +2159,7 @@
 
     window.removeAuthorizedAdmin = async (email) => {
       if (email === PRIMARY_OWNER_EMAIL) return;
-      const ok = await askConfirm("Quitar administrador", `¿Deseas revocar el acceso al panel para ${email}?`);
-      if (!ok) return;
+      if (!confirm(`¿Quitar acceso de administrador a ${email}?`)) return;
       const updated = getAuthorizedEmails().filter(e => e !== email);
       try {
         await setDoc(settingsDoc, { authorizedAdmins: updated }, { merge: true });
@@ -2562,22 +2171,16 @@
 
     document.getElementById("settings-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const logoRaw = document.getElementById("set-store-logo").value.trim();
-      const heroRaw = document.getElementById("set-hero-image").value.trim();
-      const aboutRaw = document.getElementById("set-about-image").value.trim();
-      if ([logoRaw, heroRaw, aboutRaw].some(isInvalidLocalPath)) {
-        return showToast("No pegues rutas locales de PC. Usa los botones Subir foto.", true);
-      }
       const payload = {
         storeName: document.getElementById("set-store-name").value.trim() || "JM NEXO STORE",
         storeTagline: document.getElementById("set-store-tagline").value.trim(),
         adminDisplayName: document.getElementById("set-admin-name").value.trim(),
-        storeLogo: normalizeImageUrl(logoRaw),
+        storeLogo: document.getElementById("set-store-logo").value.trim(),
         heroBadge: document.getElementById("set-hero-badge").value.trim(),
         heroTitle: document.getElementById("set-hero-title").value.trim(),
         heroHighlight: document.getElementById("set-hero-highlight").value.trim(),
         heroSubtitle: document.getElementById("set-hero-subtitle").value.trim(),
-        heroImage: normalizeImageUrl(heroRaw),
+        heroImage: document.getElementById("set-hero-image").value.trim(),
         stat1Val: document.getElementById("set-stat1-val").value.trim(),
         stat1Lbl: document.getElementById("set-stat1-lbl").value.trim(),
         stat2Val: document.getElementById("set-stat2-val").value.trim(),
@@ -2587,27 +2190,23 @@
         aboutTitle: document.getElementById("set-about-title").value.trim(),
         aboutDesc: document.getElementById("set-about-desc").value.trim(),
         aboutLocation: document.getElementById("set-about-location").value.trim(),
-        aboutImage: normalizeImageUrl(aboutRaw),
+        aboutImage: document.getElementById("set-about-image").value.trim(),
         whatsapp: document.getElementById("set-whatsapp").value.trim().replace(/[^0-9]/g, ""),
         freeShippingMin: Number(document.getElementById("set-free-shipping").value || 299),
         marquee: document.getElementById("set-marquee").value.trim(),
         authorizedAdmins: getAuthorizedEmails()
       };
-      if (!checkFirestoreSizeSafe(payload)) {
-        return showToast("Las fotos de Ajustes superan el límite. Vuelve a subirlas usando el botón Subir foto.", true);
-      }
       try {
         await setDoc(settingsDoc, payload, { merge: true });
-        showToast("¡Ajustes y fotos actualizados en laptop y celular!");
+        showToast("¡Todos los ajustes se publicaron en vivo!");
       } catch (err) {
         showToast("Error al guardar ajustes: " + err.message, true);
       }
     });
 
-    // Arranque inmediato: pinta la UI y trae datos reales por HTTPS REST + live snapshots
+    // Arranque
     renderAll();
     handleRoute();
-    loadStoreFromRestAPI(false);
   </script>
 </body>
 </html>
